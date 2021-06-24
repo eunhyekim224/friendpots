@@ -8,7 +8,7 @@ type Friend = {
 
 describe("Friend", () => {
   describe("Request to create a new friend", () => {
-    it("should create a new friend with a name and ID in the document store", async () => {
+    it("should create a new friend with a name and ID", async () => {
 
         const newFriend: Friend = { name: "New Friend" };
 
@@ -27,7 +27,6 @@ describe("Friend", () => {
         const friend = await friendResponse.json();
 
         assert.strictEqual(friend.name, newFriend.name)
-
     });
   });
 });
