@@ -6,8 +6,23 @@ import { uuid } from "uuidv4";
 const hostname = "127.0.0.1";
 const port = 8000;
 
-type Friend = {
-  id?: string;
+class Friends {
+  create(name: string) {
+    return new Friend(uuid(), name);
+  }
+}
+
+class Friend {
+  id;
+  name;
+
+  constructor(id: string, name: string) {
+    this.name = name;
+    this.id = id;
+  }
+}
+
+type FriendDTO = {
   name: string;
 };
 
@@ -19,11 +34,10 @@ type PostCallback<T> = {
   (postedData: T): T;
 };
 
-function createNewFriend(friendData: Friend): Friend {
-  const newFriend = {
-    id: uuid(),
-    name: friendData.name,
-  } as Friend;
+function createNewFriend(friendData: FriendDTO): Friend {
+
+  const newFriend = new Friends().create(friendData.name)
+
   // store friend to a file
   fs.readFile("store/friends.json", "utf8", (err, data) => {
     if (err) {
@@ -35,7 +49,7 @@ function createNewFriend(friendData: Friend): Friend {
       fs.writeFileSync("store/friends.json", allFriendsJson);
     }
   });
-  return {} as Friend;
+  return newFriend;
 }
 
 function postHandler<T>(
