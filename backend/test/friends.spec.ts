@@ -8,34 +8,24 @@ type Friend = {
 
 describe("Friend", () => {
   describe("Request to create a new friend", () => {
-    it("should create a new friend with a name and ID", async () => {
+    it("should create a new friend", async () => {
 
-        const newFriend: Friend = { name: "New Friend" };
+        const testFriendDto: Friend = { name: "New Test Friend" };
 
         const requestOptions = {
             method: "POST",
-            body: JSON.stringify(newFriend),
+            body: JSON.stringify(testFriendDto),
             headers: { 'Content-Type': 'application/json' }
         }
-        const createNewFriendResponse = await fetch("http://localhost:8000/friend", requestOptions);
-        console.log(createNewFriendResponse)
-        const { id: newFriendId } = await createNewFriendResponse.json();
-        
-        // Make a request to get the newly created friend
+        const createNewFriendResponse = await fetch("http://localhost:8000/friends", requestOptions);
+        const testFriend = await createNewFriendResponse.json();
+      
+        // Make a request to get the created friend to check it's there
+        const friendResponse = await fetch(`http://localhost:8000/friends/${testFriend.id}`);
+        const createdFriend = await friendResponse.json();
 
-        const friendResponse = await fetch(`http://localhost:8000/friend/${newFriendId}`);
-        const friend = await friendResponse.json();
-
-        assert.strictEqual(friend.name, newFriend.name)
+        console.log(testFriend, createdFriend)
+        assert.deepStrictEqual(testFriend, createdFriend)
     });
   });
 });
-
-// function checkStatus(res) {
-//     if (res.ok) { // res.status >= 200 && res.status < 300
-//         return res;
-//     } else {
-//         throw MyCustomError(res.statusText);
-//     }
-// }
- 

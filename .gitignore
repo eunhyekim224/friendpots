@@ -2,5 +2,6 @@
 **/package-lock.json
 
 backend/build/
+backend/store/
 
 .vscode
