@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "npx ts-mocha -p tsconfig.json test/*.spec.ts",
-    "start": "ts-node-dev index.ts"
+    "start": "ts-node-dev index.ts",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "repository": {
     "type": "git",
