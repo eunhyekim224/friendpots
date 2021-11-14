@@ -24,7 +24,6 @@ describe("Friend", () => {
         const friendResponse = await fetch(`http://localhost:8000/friends/${testFriend.id}`);
         const createdFriend = await friendResponse.json();
 
-        console.log(testFriend, createdFriend)
         assert.deepStrictEqual(testFriend, createdFriend)
     });
   });
