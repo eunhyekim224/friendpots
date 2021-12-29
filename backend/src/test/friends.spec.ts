@@ -1,5 +1,6 @@
-import assert from "assert";
 import fetch from "node-fetch";
+import { describe, it } from 'mocha';
+import assert from 'assert';
 
 type Friend = {
     id?: string,

@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "npx ts-mocha -p tsconfig.json src/test/*.spec.ts",
-    "start": "ts-node-dev src/app.ts"
+    "start": "ts-node-dev src/app.ts",
+    "build": "tsc /"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   "homepage": "https://github.com/eunhyekim224/friendpots#readme",
   "devDependencies": {
     "@types/expect": "^24.3.0",
-    "@types/mocha": "^8.2.2",
+    "@types/mocha": "^8.2.3",
     "@types/node": "^15.12.2",
     "@types/node-fetch": "^2.5.10",
     "mocha": "^9.0.0",

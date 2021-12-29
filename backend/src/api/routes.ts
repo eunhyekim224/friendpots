@@ -8,8 +8,8 @@ import { FriendController, FriendDTO } from "./components/friend/controller";
 import { Friend } from "./components/friend/model/Friend";
 
 export function handler(req: IncomingMessage, res: ServerResponse) {
-    console.log(req)
-    let parsedUrl = new URL(req.url as string);
+    console.log(req.url, req.headers.host)
+    let parsedUrl = new URL(req.url as string, req.headers.host);
 
     const friendController = new FriendController();
 
