@@ -26,6 +26,9 @@ describe("Friend", () => {
         const createdFriend = await friendResponse.json();
 
         console.log(testFriend, createdFriend)
+
+        assert.deepStrictEqual(createNewFriendResponse.status, 200);
+        assert.deepStrictEqual(friendResponse.status, 200);
         assert.deepStrictEqual(testFriend, createdFriend)
     });
   });

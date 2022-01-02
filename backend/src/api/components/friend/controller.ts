@@ -10,7 +10,7 @@ export class FriendController {
 
         // store friend to a file
         return new Promise((resolve, reject) => {
-            fs.readFile("store/friends.json", "utf8", (err, data) => {
+            fs.readFile("./backend/store/friends.json", "utf8", (err, data) => {
                 if (err) {
                     throw err;
                 } else {
@@ -18,7 +18,7 @@ export class FriendController {
                     allFriends.push(newFriend);
 
                     const allFriendsJson = JSON.stringify(allFriends);
-                    fs.writeFileSync("store/friends.json", allFriendsJson);
+                    fs.writeFileSync("./backend/store/friends.json", allFriendsJson);
                 }
             });
             resolve(newFriend);
@@ -27,10 +27,9 @@ export class FriendController {
 
     getFriend(req: IncomingMessage, reqUrl: URL): Promise<Friend> {
         const friendId = reqUrl.pathname.split("/")[2];
-        console.log(friendId, "friendId");
-
+        
         return new Promise((resolve, reject) => {
-            fs.readFile("store/friends.json", "utf8", (err, data) => {
+            fs.readFile("./backend/store/friends.json", "utf8", (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
