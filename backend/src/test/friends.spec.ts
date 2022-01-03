@@ -11,6 +11,7 @@ describe("Friend", () => {
   describe("Request to create a new friend", () => {
     it("should create a new friend", async () => {
 
+        // Arrange
         const testFriendDto: Friend = { name: "New Test Friend" };
 
         const requestOptions = {
@@ -18,17 +19,20 @@ describe("Friend", () => {
             body: JSON.stringify(testFriendDto),
             headers: { 'Content-Type': 'application/json' }
         }
+
+        // Act
         const createNewFriendResponse = await fetch("http://localhost:8000/friends", requestOptions);
         const testFriend = await createNewFriendResponse.json();
       
-        // Make a request to get the created friend to check it's there
-        const friendResponse = await fetch(`http://localhost:8000/friends/${testFriend.id}`);
-        const createdFriend = await friendResponse.json();
+        const getFriendResponse = await fetch(`http://localhost:8000/friends/${testFriend.id}`);
+        const createdFriend = await getFriendResponse.json();
 
-        console.log(testFriend, createdFriend)
+        // Assert
+        const postFriendIsSuccessful = createNewFriendResponse.status === 200;
+        const getFriendIsSuccessful = getFriendResponse.status === 200;
 
-        assert.deepStrictEqual(createNewFriendResponse.status, 200);
-        assert.deepStrictEqual(friendResponse.status, 200);
+        assert.strictEqual(getFriendIsSuccessful, true);
+        assert.strictEqual(postFriendIsSuccessful, true);
         assert.deepStrictEqual(testFriend, createdFriend)
     });
   });
