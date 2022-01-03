@@ -5,8 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "npx ts-mocha -p tsconfig.json src/test/*.spec.ts",
-    "start": "ts-node-dev src/app.ts",
-    "build": "tsc /"
+    "start": "ts-node-dev src/app.ts"
   },
   "repository": {
     "type": "git",
