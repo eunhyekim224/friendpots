@@ -1,23 +1,26 @@
-import { IncomingMessage } from "http";
+import { IncomingMessage, ServerResponse } from "http";
 import { Friend } from "./model/Friend";
 import { Friends } from "./model/Friends";
-import { Store } from "../../../../store/Store";
+import { Store } from "../../../services/Store";
+import { getHandler, postHandler } from "../../../services/requestHandlers";
 
 export class FriendController {
     friendStorePath = "./backend/store/friends.json";
 
-    createNewFriend(friendData: FriendDTO): Promise<Friend> {
-        const newFriend = new Friends().create(friendData.name);
+    handleRequest(req: IncomingMessage, res: ServerResponse) {
+        const parsedUrl = new URL(
+            req.url as string,
+            `http://${req.headers.host}`
+        );
 
-        const store = new Store();
-        return store.write<Friend>(this.friendStorePath, newFriend);
-    }
-
-    getFriend(req: IncomingMessage, reqUrl: URL): Promise<Friend> {
-        const friendId = reqUrl.pathname.split("/")[2];
-
-        const store = new Store();
-        return store.read<Friend>(this.friendStorePath, friendId);
+        if (req.method === "POST") {
+            postHandler<FriendDTO>(req, res, (f) => this.createNewFriend(f));
+        
+        } else if (req.method === "GET") {
+            getHandler<Friend>(req, res, parsedUrl, () =>
+                this.getFriend(req, parsedUrl)
+            );
+        }
     }
 }
 
