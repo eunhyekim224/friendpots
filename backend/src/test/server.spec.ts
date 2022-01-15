@@ -6,6 +6,6 @@ describe("Nodejs server", () => {
   it('should return "Hello World"', async() => {
     const response = await fetch("http://localhost:8000");
     const serverMsg = await response.text();
-    assert.strictEqual(serverMsg, "Hello World");
+    assert.strictEqual(serverMsg, "Welcome to FriendPots!");
   });
 });
