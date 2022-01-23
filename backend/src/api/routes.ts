@@ -9,9 +9,11 @@ export function handler(req: IncomingMessage, res: ServerResponse) {
     if (parsedUrl.pathname === "/") {
         res.writeHead(200, { "Content-Type": "text/plain" });
         res.end("Welcome to FriendPots!");
+
     } else if (parsedUrl.pathname.includes("/friends")) {
         const friendController = new FriendController();
         return friendController.handleRequest(req, res);
+        
     } else {
         noResponse(req, res);
     }

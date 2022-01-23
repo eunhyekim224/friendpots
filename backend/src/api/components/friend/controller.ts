@@ -21,7 +21,7 @@ export class FriendController {
 
                 const savedFriend = await friend.save(friend);
 
-                res.writeHead(201);
+                res.writeHead(201, { "Location": `friends/${friendId}` });
                 res.end(JSON.stringify(savedFriend));
             });
         } else if (req.method === "GET") {
