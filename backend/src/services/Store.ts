@@ -25,7 +25,6 @@ export class Store {
     write<T>(path: string, itemToStore: T): Promise<T> {
         return new Promise((resolve, reject) => {
             fs.readFile(path, "utf8", (err, data) => {
-                console.log(err);
                 if (err) {
                     reject(err);
                 } else {
