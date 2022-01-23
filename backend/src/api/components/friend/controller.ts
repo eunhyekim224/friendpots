@@ -1,16 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { Friend, FriendFactory } from "./model/Friend";
-import { Friends } from "./model/Friends";
-import { Store } from "../../../services/Store";
-import { getHandler, postHandler } from "../../../services/requestHandlers";
+import { Friend } from "./model/Friend";
+import { v4 } from "uuid";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
-        const parsedUrl = new URL(
-            req.url as string,
-            `http://${req.headers.host}`
-        );
-
         if (req.method === "POST") {
             req.setEncoding("utf8");
 
@@ -23,18 +16,23 @@ export class FriendController {
             req.on("end", async () => {
                 const friendDTO = JSON.parse(data) as FriendDTO;
 
-                const friend = new FriendFactory(friendDTO).create();
+                const friendId = v4();
+                const friend = new Friend(friendId, friendDTO.name);
 
-                const createdFriend = await friend.save(friend);
-                
+                const savedFriend = await friend.save(friend);
+
                 res.writeHead(201);
-                res.end(JSON.stringify(createdFriend));
+                res.end(JSON.stringify(savedFriend));
             });
         } else if (req.method === "GET") {
+            const parsedUrl = new URL(
+                req.url as string,
+                `http://${req.headers.host}`
+            );
             const friendId = parsedUrl.pathname.split("/")[2];
             const friend = new Friend(friendId);
 
-            const retreivedFriend = friend.getById(req, parsedUrl);
+            const retreivedFriend = await friend.getById();
             if (retreivedFriend) {
                 res.writeHead(200);
                 res.end(JSON.stringify(retreivedFriend));
