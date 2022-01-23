@@ -28,11 +28,12 @@ describe("Friend", () => {
         const createdFriend = await getFriendResponse.json();
 
         // Assert
-        const postFriendIsSuccessful = createNewFriendResponse.status === 200;
+        const postFriendIsSuccessful = createNewFriendResponse.status === 201;
         const getFriendIsSuccessful = getFriendResponse.status === 200;
 
         assert.strictEqual(getFriendIsSuccessful, true);
         assert.strictEqual(postFriendIsSuccessful, true);
+
         assert.deepStrictEqual(testFriend, createdFriend)
     });
   });
