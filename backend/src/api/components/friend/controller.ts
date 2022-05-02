@@ -1,29 +1,20 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { Friend } from "./model/Friend";
+import { Friend } from "./Friend";
 import { v4 } from "uuid";
+import { requestBody } from "../../../services/requestHandlers";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
         if (req.method === "POST") {
-            req.setEncoding("utf8");
+            const friendDTO = (await requestBody<FriendDTO>(req)) as FriendDTO;
 
-            let data = "";
+            const friendId = v4();
+            const friend = new Friend(friendId, friendDTO.name);
 
-            req.on("data", (chunk: string) => {
-                data += chunk;
-            });
+            const savedFriend = await friend.save(friend);
 
-            req.on("end", async () => {
-                const friendDTO = JSON.parse(data) as FriendDTO;
-
-                const friendId = v4();
-                const friend = new Friend(friendId, friendDTO.name);
-
-                const savedFriend = await friend.save(friend);
-
-                res.writeHead(201, { Location: `friends/${friendId}` });
-                res.end(JSON.stringify(savedFriend));
-            });
+            res.writeHead(201, { Location: `friends/${friendId}` });
+            res.end(JSON.stringify(savedFriend));
         } else if (req.method === "GET") {
             const parsedUrl = new URL(
                 req.url as string,
@@ -32,10 +23,10 @@ export class FriendController {
             const friendId = parsedUrl.pathname.split("/")[2];
             const friend = new Friend(friendId);
 
-            const retreivedFriend = await friend.getById();
-            if (retreivedFriend) {
+            const retrievedFriend = await friend.getById();
+            if (retrievedFriend) {
                 res.writeHead(200);
-                res.end(JSON.stringify(retreivedFriend));
+                res.end(JSON.stringify(retrievedFriend));
             } else {
                 res.writeHead(404);
                 res.end();

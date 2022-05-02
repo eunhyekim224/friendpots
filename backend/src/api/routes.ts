@@ -1,6 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { URL } from "url";
-import { noResponse } from "../services/requestHandlers";
 import { FriendController } from "./components/friend/controller";
 
 export function handler(req: IncomingMessage, res: ServerResponse) {
@@ -13,6 +12,7 @@ export function handler(req: IncomingMessage, res: ServerResponse) {
         const friendController = new FriendController();
         return friendController.handleRequest(req, res);
     } else {
-        noResponse(req, res);
+        res.writeHead(404);
+        res.end(JSON.stringify({ message: "Route not found" }));
     }
 }
