@@ -9,13 +9,6 @@ export class Friend {
         this.name = name;
     }
 
-    save(friend: Friend): Promise<Friend> {
-        const friendStorePath = "./backend/store/friends.json";
-
-        const store = new Store();
-        return store.write<Friend>(friendStorePath, friend);
-    }
-
     getById(): Promise<Friend> {
         const friendStorePath = "./backend/store/friends.json";
 

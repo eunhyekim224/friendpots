@@ -7,6 +7,6 @@ export function requestBody<T>(req: IncomingMessage): T | void {
         data += chunk;
     });
     req.on("end", async () => {
-        return JSON.parse(data) as T;
+        return JSON.parse(data);
     });
 }
