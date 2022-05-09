@@ -12,25 +12,26 @@ export function handler(req: IncomingMessage, res: ServerResponse) {
         res.writeHead(200, { "Content-Type": "text/plain" });
         res.end("Welcome to FriendPots!");
     } else {
-        return controllerByPath(pathname)?.handleRequest(req, res);
-    }
+        const selectedController = controller(pathname);
 
-    // } else {
-    //     res.writeHead(404);
-    //     res.end(JSON.stringify({ message: "Route not found" }));
-    // }
+        if (selectedController) {
+            return selectedController.handleRequest(req, res);
+        } else {
+            res.writeHead(404);
+            res.end(JSON.stringify({ message: "Route not found" }));
+        }
+    }
 }
 
-const controllerByPath = (urlPathname: string) => {
+const controller = (urlPathname: string) => {
     const resources = urlPathname.split("/");
-    const mainResource = resources[0];
+    const mainResource = resources[1];
 
     let controller;
 
     switch (mainResource) {
-        case "/friends":
+        case "friends":
             controller = new FriendController();
-            break;
     }
 
     return controller;
