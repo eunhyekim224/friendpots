@@ -2,21 +2,26 @@ import { IncomingMessage, ServerResponse } from "http";
 import { Friend } from "./Friend";
 import { v4 } from "uuid";
 import { requestBody } from "../../../services/requestHandlers";
-import { Friends } from './Friends';
+import { Friends } from "./Friends";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
         if (req.method === "POST") {
-            const friendDTO = (requestBody<FriendDTO>(req)) as FriendDTO;
 
-            const friendId = v4();
-            const friend = new Friend(friendId, friendDTO.name);
-            const friends = new Friends();
+            const requestData = await requestBody(req);
 
-            const savedFriend = await friends.save(friend);
+            req.on("end", async () => {
+                const friendDTO = JSON.parse(requestData) as FriendDTO;
 
-            res.writeHead(201, { Location: `friends/${friendId}` });
-            res.end(JSON.stringify(savedFriend));
+                const friendId = v4();
+                const friend = new Friend(friendId, friendDTO.name);
+                const friends = new Friends();
+
+                const savedFriend = await friends.save(friend);
+
+                res.writeHead(201, { Location: `friends/${friendId}` });
+                res.end(JSON.stringify(savedFriend));
+            });
         } else if (req.method === "GET") {
             const parsedUrl = new URL(
                 req.url as string,

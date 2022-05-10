@@ -1,12 +1,18 @@
 import { IncomingMessage, ServerResponse } from "http";
 
-export function requestBody<T>(req: IncomingMessage): T | void {
+export function requestBody(req: IncomingMessage): Promise<string> {
     req.setEncoding("utf8");
-    let data = "";
-    req.on("data", (chunk: string) => {
-        data += chunk;
-    });
-    req.on("end", async () => {
-        return JSON.parse(data);
+
+    return new Promise((resolve, reject) => {
+        let data = "";
+
+        req.on("data", (chunk: string) => {
+            data += chunk;
+            resolve(data);
+        });
+
+        req.on("error", (err) => {
+            reject(err.message)
+        })
     });
 }
