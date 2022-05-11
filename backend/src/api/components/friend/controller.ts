@@ -29,8 +29,8 @@ export class FriendController {
             );
             const friendId = parsedUrl.pathname.split("/")[2];
             const friend = new Friend(friendId);
-
             const retrievedFriend = await friend.getById();
+
             if (retrievedFriend) {
                 res.writeHead(200);
                 res.end(JSON.stringify(retrievedFriend));
