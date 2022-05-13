@@ -9,10 +9,13 @@ function App() {
         event.preventDefault();
 
         try {
-            const addedFriend = await axios.post("/friends", {
-                name,
-            });
-            console.log(addedFriend, "new");
+            const { data: addedFriend } = await axios.post(
+                "/friends",
+                {
+                    name,
+                }
+            );
+            alert(`Your friend, ${name}, has just been planted!`)
         } catch (err) {
             console.log(err);
         }
