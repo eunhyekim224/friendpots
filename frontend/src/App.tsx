@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "./App.css";
+import { NewFriendForm } from "./components/newFriendForm";
+import Modal from "react-modal";
 
 function App() {
-    const [name, setName] = useState("");
+    const [modalIsOpen, setIsOpen] = React.useState(false);
 
     const addFriend = async (event: any) => {
         event.preventDefault();
@@ -18,24 +20,31 @@ function App() {
         }
     };
 
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     return (
         <div className="App">
             <div className="App-header">
                 <h1 id="header-text">FriendPots</h1>
             </div>
             <div>
-                <form onSubmit={addFriend}>
-                    <label>
-                        Enter your friend's name:
-                        <input
-                            type="text"
-                            name="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </label>
-                    <input type="submit" value="Add" />
-                </form>
+                <button onClick={openModal}>Click to add a new friend</button>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Example Modal"
+                >
+                    <div>
+                        <NewFriendForm onSubmit={addFriend}></NewFriendForm>
+                    </div>
+                    <button onClick={closeModal}>close</button>
+                </Modal>
             </div>
         </div>
     );
