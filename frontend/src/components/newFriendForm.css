@@ -1,0 +1,13 @@
+form {
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+input:invalid {
+  border: 2px solid red;
+}
+
+input:valid {
+  border: 2px solid green;
+}

@@ -10,13 +10,17 @@ function App() {
     const addFriend = async (event: any) => {
         event.preventDefault();
 
+        const name = event.target.name.value
+
+        const newFriend = {
+            name
+        }
+
         try {
-            const { data: addedFriend } = await axios.post("/friends", {
-                name,
-            });
-            alert(`Your friend, ${name}, has just been planted!`);
+            const { data: addedFriend } = await axios.post("/friends", newFriend);
+            alert(`Your friend, ${addedFriend.name}, has just been planted!`);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -27,6 +31,17 @@ function App() {
     function closeModal() {
         setIsOpen(false);
     }
+
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+        },
+    };
 
     return (
         <div className="App">
@@ -39,6 +54,7 @@ function App() {
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
                     contentLabel="Example Modal"
+                    style={customStyles}
                 >
                     <div>
                         <NewFriendForm onSubmit={addFriend}></NewFriendForm>
