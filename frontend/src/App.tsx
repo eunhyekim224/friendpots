@@ -16,8 +16,6 @@ function App() {
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
 
-    console.log(" state newFriendId", newFriendId);
-
     const addFriend = async (event: any) => {
         event.preventDefault();
 
@@ -32,31 +30,29 @@ function App() {
                 newFriend
             );
             setNewFriendId(addedFriend.id);
-            console.log("newFriendId", newFriendId);
         } catch (err) {
             console.error("Failed to create new friend", err);
         }
     };
 
-    const getNewFriend = async () => {
-        console.log("getNewFriend start");
-        // try {
-            const { data: friend } = await axios.get(`friends/${newFriendId}`);
-                    console.log("getNewFriend end");
-
-            console.log("friend retrieved", friend);
-
-            setNewFriend(friend);
-        // } catch (err) {
-        //     console.error("Failed to fetch new friend", err);
-        // }
-    };
+    const getNewFriend = useCallback(
+        async (friendId: string) => {
+            try {
+                const { data: friend } = await axios.get(`friends/${friendId}`);
+                console.log("getNewFriend end");
+                setNewFriend(friend);
+            } catch (err) {
+                console.error("Failed to fetch new friend", err);
+            }
+        },
+        [newFriendId]
+    );
 
     useEffect(() => {
-        if (!newFriend && newFriendId) {
-            getNewFriend();
+        if (newFriendId) {
+            getNewFriend(newFriendId);
         }
-    }, [getNewFriend, newFriend]);
+    }, [newFriendId]);
 
     function openModal() {
         setIsOpen(true);
@@ -91,16 +87,14 @@ function App() {
                     style={customStyles}
                 >
                     <div>
-                        <NewFriendForm
-                            onSubmit={async (e) => await addFriend(e)}
-                        ></NewFriendForm>
+                        <NewFriendForm onSubmit={addFriend}></NewFriendForm>
                     </div>
                     <button onClick={closeModal}>close</button>
                 </Modal>
             </div>
             {newFriend && (
                 <div>
-                    <h2>Your New FriendPot!</h2>
+                    <h2>Your new FriendPot:</h2>
                     <p>{newFriend.name}</p>
                 </div>
             )}
