@@ -44,6 +44,13 @@
         ]
     },
     "devDependencies": {
-        "@types/react-modal": "^3.13.1"
+        "@types/react-modal": "^3.13.1",
+        "@typescript-eslint/eslint-plugin": "^5.26.0",
+        "@typescript-eslint/parser": "^5.26.0",
+        "eslint": "^8.16.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.30.0",
+        "prettier": "^2.6.2"
     }
 }
