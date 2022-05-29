@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.css";
 import { NewFriendForm } from "../components/newFriendForm";
 import Modal from "react-modal";
@@ -9,7 +9,7 @@ type Friend = {
     name: string;
 };
 
-function Home() {
+function Home(): ReactElement {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
@@ -81,8 +81,8 @@ function Home() {
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
-                    contentLabel="Example Modal"
-                    style={customStyles}
+                    contentLabel="New Friend Modal"
+                    className="newFriendModal"
                 >
                     <div>
                         <NewFriendForm onSubmit={addFriend}></NewFriendForm>
