@@ -1,10 +1,14 @@
 import Home from "./screens/Home";
+import CssBaseline from "@mui/material/CssBaseline";
+
 
 function App() {
     return (
-        <div>
-            <Home />
-        </div>
+        <>
+            <CssBaseline enableColorScheme>
+                <Home />
+            </CssBaseline>
+        </>
     );
 }
 

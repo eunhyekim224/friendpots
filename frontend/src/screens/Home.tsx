@@ -3,6 +3,14 @@ import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.css";
 import { NewFriendForm } from "../components/newFriendForm";
 import Modal from "react-modal";
+import {
+    Button,
+    ButtonProps,
+    styled,
+    Typography,
+    useTheme,
+} from "@mui/material";
+import { green, orange, purple } from "@mui/material/colors";
 
 type Friend = {
     id?: string;
@@ -10,7 +18,8 @@ type Friend = {
 };
 
 function Home(): ReactElement {
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const theme = useTheme();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
 
@@ -53,36 +62,38 @@ function Home(): ReactElement {
     }, [newFriendId]);
 
     function openModal() {
-        setIsOpen(true);
+        setModalIsOpen(true);
     }
 
     function closeModal() {
-        setIsOpen(false);
+        setModalIsOpen(false);
     }
 
-    const customStyles = {
-        content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
+    const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
+        color: "black",
+        backgroundColor: "#ffffff",
+        "&:hover": {
+            backgroundColor: "#bec5b7",
         },
-    };
+    }));
 
     return (
         <div className="App">
             <div className="App-header">
-                <h1 id="header-text">FriendPots</h1>
+                <Typography variant="h1" component="div" gutterBottom>
+                    FriendPots
+                </Typography>
             </div>
             <div>
-                <button onClick={openModal}>Click to add a new friend</button>
+                <AddFriendButton variant="contained" onClick={openModal}>
+                    Add a new friend
+                </AddFriendButton>
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
                     contentLabel="New Friend Modal"
-                    className="newFriendModal"
+                    className="modal"
+                    overlayClassName="modal-overlay"
                 >
                     <div>
                         <NewFriendForm onSubmit={addFriend}></NewFriendForm>
@@ -92,8 +103,12 @@ function Home(): ReactElement {
             </div>
             {newFriend && (
                 <div>
-                    <h2>Your new FriendPot:</h2>
-                    <p>{newFriend.name}</p>
+                    <Typography variant="h3" component="div" gutterBottom>
+                        Your new FriendPot:
+                    </Typography>
+                    <Typography variant="body1" component="div" gutterBottom>
+                        {newFriend.name}
+                    </Typography>
                 </div>
             )}
         </div>

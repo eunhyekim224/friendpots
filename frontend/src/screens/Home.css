@@ -1,11 +1,14 @@
-html, body, #root {
+html,
+body,
+#root {
     flex: 1;
     height: 100%;
 }
 
 .App {
     text-align: center;
-    background-color: #4f7942;
+    background-color: #6b9b37
+;
     height: 100%;
     margin: 0;
 }

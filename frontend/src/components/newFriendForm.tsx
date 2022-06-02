@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './newFriendForm.css'
+import "./newFriendForm.css";
 
 type NewFriendFormProps = {
     onSubmit: (e: any) => Promise<void>;
@@ -21,8 +21,7 @@ export const NewFriendForm = ({ onSubmit }: NewFriendFormProps) => {
                     onChange={(e) => setName(e.target.value)}
                 />
             </div>
-            <button id='addButton'>Add</button>
+            <button id="addButton">Add</button>
         </form>
     );
 };
-
