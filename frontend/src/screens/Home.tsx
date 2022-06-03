@@ -1,16 +1,10 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
-import "./Home.css";
+import "./Home.styled";
 import { NewFriendForm } from "../components/newFriendForm";
 import Modal from "react-modal";
-import {
-    Button,
-    ButtonProps,
-    styled,
-    Typography,
-    useTheme,
-} from "@mui/material";
-import { green, orange, purple } from "@mui/material/colors";
+import { Box, Typography, useTheme } from "@mui/material";
+import { AddFriendButton } from "./Home.styled";
 
 type Friend = {
     id?: string;
@@ -18,7 +12,6 @@ type Friend = {
 };
 
 function Home(): ReactElement {
-    const theme = useTheme();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
@@ -69,18 +62,21 @@ function Home(): ReactElement {
         setModalIsOpen(false);
     }
 
-    const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
-        color: "black",
-        backgroundColor: "#ffffff",
-        "&:hover": {
-            backgroundColor: "#bec5b7",
-        },
-    }));
-
     return (
-        <div className="App">
+        <Box sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'green',
+        }}>
             <div className="App-header">
-                <Typography variant="h1" component="div" gutterBottom>
+                <Typography
+                    variant="h1"
+                    component="div"
+                    gutterBottom
+                >
                     FriendPots
                 </Typography>
             </div>
@@ -111,7 +107,7 @@ function Home(): ReactElement {
                     </Typography>
                 </div>
             )}
-        </div>
+        </Box>
     );
 }
 
