@@ -3,7 +3,18 @@ import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
 import { NewFriendForm } from "../components/newFriendForm";
 import Modal from "react-modal";
-import { Box, Typography, useTheme } from "@mui/material";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    TextField,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
 
 type Friend = {
@@ -15,11 +26,9 @@ function Home(): ReactElement {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
+    const [name, setName] = useState<string>("");
 
-    const addFriend = async (event: any) => {
-        event.preventDefault();
-
-        const name = event.target.name.value;
+    const addFriend = async () => {
         const newFriend: Friend = {
             name,
         };
@@ -30,6 +39,7 @@ function Home(): ReactElement {
                 newFriend
             );
             setNewFriendId(addedFriend.id);
+            setModalIsOpen(false);
         } catch (err) {
             console.error("Failed to create new friend", err);
         }
@@ -39,7 +49,6 @@ function Home(): ReactElement {
         async (friendId: string) => {
             try {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
-                console.log("getNewFriend end");
                 setNewFriend(friend);
             } catch (err) {
                 console.error("Failed to fetch new friend", err);
@@ -54,59 +63,99 @@ function Home(): ReactElement {
         }
     }, [newFriendId]);
 
-    function openModal() {
+    const openModal = () => {
         setModalIsOpen(true);
-    }
+    };
 
-    function closeModal() {
+    const closeModal = () => {
         setModalIsOpen(false);
-    }
+    };
+
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setName(event.target.value);
+    };
+
+    const handleKeyPress = async (
+        event: React.KeyboardEvent
+    ) => {
+        if (event.key === "Enter") {
+            await addFriend();
+            setModalIsOpen(false);
+        }
+    };
 
     return (
-        <Box sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'green',
-        }}>
-            <div className="App-header">
-                <Typography
-                    variant="h1"
-                    component="div"
-                    gutterBottom
-                >
-                    FriendPots
-                </Typography>
-            </div>
-            <div>
+        <Box
+            sx={{
+                height: "100%",
+                backgroundColor: "green",
+            }}
+        >
+            <Typography
+                variant="h1"
+                component="div"
+                gutterBottom
+                sx={{
+                    marginBottom: "100px",
+                    paddingTop: "200px",
+                    textAlign: "center",
+                }}
+            >
+                FriendPots
+            </Typography>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
                 <AddFriendButton variant="contained" onClick={openModal}>
-                    Add a new friend
+                    Add a new friendpot
                 </AddFriendButton>
-                <Modal
-                    isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    contentLabel="New Friend Modal"
-                    className="modal"
-                    overlayClassName="modal-overlay"
+                <Dialog
+                    open={modalIsOpen}
+                    onClose={closeModal}
+                    maxWidth="xs"
+                    fullWidth={true}
                 >
+                    <DialogTitle>Add your friendpot</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Name"
+                            type="text"
+                            variant="standard"
+                            color="success"
+                            onChange={handleNameChange}
+                            onKeyDown={handleKeyPress}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button sx={{ color: "green" }} onClick={closeModal}>
+                            Cancel
+                        </Button>
+                        <Button sx={{ color: "green" }} onClick={addFriend}>
+                            Add
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {newFriend && (
                     <div>
-                        <NewFriendForm onSubmit={addFriend}></NewFriendForm>
+                        <Typography
+                            variant="h5"
+                            sx={{ marginTop: "100px" }}
+                            component="div"
+                            gutterBottom
+                        >
+                            {newFriend.name}
+                        </Typography>
                     </div>
-                    <button onClick={closeModal}>close</button>
-                </Modal>
-            </div>
-            {newFriend && (
-                <div>
-                    <Typography variant="h3" component="div" gutterBottom>
-                        Your new FriendPot:
-                    </Typography>
-                    <Typography variant="body1" component="div" gutterBottom>
-                        {newFriend.name}
-                    </Typography>
-                </div>
-            )}
+                )}
+            </Box>
         </Box>
     );
 }
