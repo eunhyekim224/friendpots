@@ -1,19 +1,18 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { NewFriendForm } from "../components/newFriendForm";
-import Modal from "react-modal";
 import {
+    Alert,
+    AlertTitle,
     Box,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
+    Snackbar,
     TextField,
     Typography,
-    useTheme,
 } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
 
@@ -27,6 +26,7 @@ function Home(): ReactElement {
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
     const [name, setName] = useState<string>("");
+    const [isError, setIsError] = useState(false);
 
     const addFriend = async () => {
         const newFriend: Friend = {
@@ -39,8 +39,10 @@ function Home(): ReactElement {
                 newFriend
             );
             setNewFriendId(addedFriend.id);
-            setModalIsOpen(false);
+            closeModal();
         } catch (err) {
+            closeModal();
+            setIsError(true);
             console.error("Failed to create new friend", err);
         }
     };
@@ -51,6 +53,7 @@ function Home(): ReactElement {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
                 setNewFriend(friend);
             } catch (err) {
+                setIsError(true);
                 console.error("Failed to fetch new friend", err);
             }
         },
@@ -75,13 +78,22 @@ function Home(): ReactElement {
         setName(event.target.value);
     };
 
-    const handleKeyPress = async (
-        event: React.KeyboardEvent
-    ) => {
+    const handleKeyPress = async (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
             await addFriend();
-            setModalIsOpen(false);
         }
+    };
+
+    const handleSnackbarClose = (
+        event?: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        console.log(reason)
+        if (reason === "clickaway") {
+            setIsError(false);
+        }
+
+        setIsError(false);
     };
 
     return (
@@ -123,7 +135,7 @@ function Home(): ReactElement {
                     <DialogTitle>Add your friendpot</DialogTitle>
                     <DialogContent>
                         <TextField
-                            autoFocus
+                            autoFocus={true}
                             margin="dense"
                             id="name"
                             label="Name"
@@ -144,16 +156,28 @@ function Home(): ReactElement {
                     </DialogActions>
                 </Dialog>
                 {newFriend && (
-                    <div>
-                        <Typography
-                            variant="h5"
-                            sx={{ marginTop: "100px" }}
-                            component="div"
-                            gutterBottom
-                        >
-                            {newFriend.name}
-                        </Typography>
-                    </div>
+                    // <div>
+                    <Typography
+                        variant="h5"
+                        sx={{ marginTop: "100px" }}
+                        component="div"
+                        gutterBottom
+                    >
+                        {newFriend.name}
+                    </Typography>
+                    // </div>
+                )}
+                {isError && (
+                    <Snackbar
+                        open={isError}
+                        autoHideDuration={6000}
+                        onClose={handleSnackbarClose}
+                    >
+                        <Alert severity="error" onClose={handleSnackbarClose}>
+                            <AlertTitle>Error</AlertTitle>
+                            Something went wrong 🥺 Please try again soon!
+                        </Alert>
+                    </Snackbar>
                 )}
             </Box>
         </Box>

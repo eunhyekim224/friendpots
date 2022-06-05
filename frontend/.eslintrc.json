@@ -21,6 +21,7 @@
     "rules": {
         "react/react-in-jsx-scope": "off",
         "no-unused-vars": "off",
+        "no-empty-function": "off",
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [
             "warn",
