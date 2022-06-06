@@ -9,7 +9,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
     Snackbar,
     TextField,
     Typography,
@@ -101,13 +100,16 @@ function Home(): ReactElement {
         <Box
             sx={{
                 height: "100%",
-                backgroundColor: "green",
+                backgroundColor: "#7cb342",
             }}
         >
             <Typography
                 variant="h1"
                 component="div"
                 gutterBottom
+                fontFamily="Sue Ellen Francisco"
+                fontSize={150}
+                color="#795548"
                 sx={{
                     marginBottom: "100px",
                     paddingTop: "200px",
@@ -137,7 +139,6 @@ function Home(): ReactElement {
                     maxWidth="xs"
                     fullWidth={true}
                 >
-                    <DialogTitle>Add your friendpot</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus={true}
@@ -183,8 +184,7 @@ function Home(): ReactElement {
                     ) : (
                         <Alert severity="success" onClose={handleSnackbarClose}>
                             <AlertTitle>Success</AlertTitle>
-                            You have successfully added your new friend
-                            pot! 🎉
+                            You have successfully added your new friend pot! 🎉
                         </Alert>
                     )}
                 </Snackbar>
