@@ -27,6 +27,7 @@ function Home(): ReactElement {
     const [newFriend, setNewFriend] = useState<null | Friend>();
     const [name, setName] = useState<string>("");
     const [isError, setIsError] = useState(false);
+    const [snackBarOpen, setSnackbarOpen] = useState(false);
 
     const addFriend = async () => {
         const newFriend: Friend = {
@@ -45,6 +46,8 @@ function Home(): ReactElement {
             setIsError(true);
             console.error("Failed to create new friend", err);
         }
+
+        setSnackbarOpen(true);
     };
 
     const getNewFriend = useCallback(
@@ -89,10 +92,9 @@ function Home(): ReactElement {
         reason?: string
     ) => {
         if (reason === "clickaway") {
-            setIsError(false);
+            return;
         }
-
-        setIsError(false);
+        setSnackbarOpen(false);
     };
 
     return (
@@ -122,7 +124,11 @@ function Home(): ReactElement {
                     alignItems: "center",
                 }}
             >
-                <AddFriendButton variant="contained" onClick={openModal} disableFocusRipple>
+                <AddFriendButton
+                    variant="contained"
+                    onClick={openModal}
+                    disableFocusRipple
+                >
                     Add a new friendpot
                 </AddFriendButton>
                 <Dialog
@@ -155,7 +161,6 @@ function Home(): ReactElement {
                     </DialogActions>
                 </Dialog>
                 {newFriend && (
-                    // <div>
                     <Typography
                         variant="h5"
                         sx={{ marginTop: "100px" }}
@@ -164,20 +169,25 @@ function Home(): ReactElement {
                     >
                         {newFriend.name}
                     </Typography>
-                    // </div>
                 )}
-                {isError && (
-                    <Snackbar
-                        open={isError}
-                        autoHideDuration={6000}
-                        onClose={handleSnackbarClose}
-                    >
+                <Snackbar
+                    open={snackBarOpen}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                >
+                    {isError ? (
                         <Alert severity="error" onClose={handleSnackbarClose}>
                             <AlertTitle>Error</AlertTitle>
                             Something went wrong 🥺 Please try again soon!
                         </Alert>
-                    </Snackbar>
-                )}
+                    ) : (
+                        <Alert severity="success" onClose={handleSnackbarClose}>
+                            <AlertTitle>Success</AlertTitle>
+                            You have successfully added your new friend
+                            pot! 🎉
+                        </Alert>
+                    )}
+                </Snackbar>
             </Box>
         </Box>
     );
