@@ -88,7 +88,6 @@ function Home(): ReactElement {
         event?: React.SyntheticEvent | Event,
         reason?: string
     ) => {
-        console.log(reason)
         if (reason === "clickaway") {
             setIsError(false);
         }
@@ -123,7 +122,7 @@ function Home(): ReactElement {
                     alignItems: "center",
                 }}
             >
-                <AddFriendButton variant="contained" onClick={openModal}>
+                <AddFriendButton variant="contained" onClick={openModal} disableFocusRipple>
                     Add a new friendpot
                 </AddFriendButton>
                 <Dialog
