@@ -167,6 +167,8 @@ function Home(): ReactElement {
                         sx={{ marginTop: "100px" }}
                         component="div"
                         gutterBottom
+                        fontFamily="Sue Ellen Francisco"
+                        fontSize={50}
                     >
                         {newFriend.name}
                     </Typography>
