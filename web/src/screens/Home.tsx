@@ -1,19 +1,10 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import {
-    Alert,
-    AlertTitle,
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    Snackbar,
-    TextField,
-    Typography,
-} from "@mui/material";
+import { Alert, AlertTitle, Box, Snackbar, Typography } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
+import { FriendPot } from "../components/FriendPot";
+import { AddFriendFormDialog } from "../components/AddFriendFormDialog";
 
 type Friend = {
     id?: string;
@@ -24,11 +15,10 @@ function Home(): ReactElement {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
-    const [name, setName] = useState<string>("");
     const [isError, setIsError] = useState(false);
     const [snackBarOpen, setSnackbarOpen] = useState(false);
 
-    const addFriend = async () => {
+    const addFriend = async (name: string) => {
         const newFriend: Friend = {
             name,
         };
@@ -49,7 +39,7 @@ function Home(): ReactElement {
         setSnackbarOpen(true);
     };
 
-    const getNewFriend = useCallback(
+    const getFriend = useCallback(
         async (friendId: string) => {
             try {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
@@ -64,7 +54,7 @@ function Home(): ReactElement {
 
     useEffect(() => {
         if (newFriendId) {
-            getNewFriend(newFriendId);
+            getFriend(newFriendId);
         }
     }, [newFriendId]);
 
@@ -74,16 +64,6 @@ function Home(): ReactElement {
 
     const closeModal = () => {
         setModalIsOpen(false);
-    };
-
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    };
-
-    const handleKeyPress = async (event: React.KeyboardEvent) => {
-        if (event.key === "Enter") {
-            await addFriend();
-        }
     };
 
     const handleSnackbarClose = (
@@ -133,46 +113,12 @@ function Home(): ReactElement {
                 >
                     Add a new friendpot
                 </AddFriendButton>
-                <Dialog
-                    open={modalIsOpen}
-                    onClose={closeModal}
-                    maxWidth="xs"
-                    fullWidth={true}
-                >
-                    <DialogContent>
-                        <TextField
-                            autoFocus={true}
-                            margin="dense"
-                            id="name"
-                            label="Name"
-                            type="text"
-                            variant="standard"
-                            color="success"
-                            onChange={handleNameChange}
-                            onKeyDown={handleKeyPress}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button sx={{ color: "green" }} onClick={closeModal}>
-                            Cancel
-                        </Button>
-                        <Button sx={{ color: "green" }} onClick={addFriend}>
-                            Add
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-                {newFriend && (
-                    <Typography
-                        variant="h5"
-                        sx={{ marginTop: "100px" }}
-                        component="div"
-                        gutterBottom
-                        fontFamily="Sue Ellen Francisco"
-                        fontSize={50}
-                    >
-                        {newFriend.name}
-                    </Typography>
-                )}
+                <AddFriendFormDialog
+                    isOpen={modalIsOpen}
+                    close={closeModal}
+                    addFriend={addFriend}
+                />
+                {newFriend && <FriendPot name={newFriend.name} />}
                 <Snackbar
                     open={snackBarOpen}
                     autoHideDuration={6000}
