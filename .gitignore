@@ -1,7 +1,7 @@
 **/node_modules/
 **/package-lock.json
 
-backend/build/
-backend/store/
+api/build/
+api/store/
 
 .vscode

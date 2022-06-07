@@ -10,7 +10,7 @@ export class Friend {
     }
 
     getById(): Promise<Friend> {
-        const friendStorePath = "./backend/store/friends.json";
+        const friendStorePath = "./api/store/friends.json";
 
         const store = new Store();
         return store.read<Friend>(friendStorePath, this.id);
