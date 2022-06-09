@@ -1,4 +1,4 @@
-import Home from "./screens/Home";
+import Home from "./screens/Home/Home.screen";
 import CssBaseline from "@mui/material/CssBaseline";
 
 

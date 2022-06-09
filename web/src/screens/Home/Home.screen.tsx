@@ -1,10 +1,11 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Alert, AlertTitle, Box, Snackbar, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
-import { FriendPot } from "../components/FriendPot";
-import { AddFriendFormDialog } from "../components/AddFriendFormDialog";
+import { FriendPot } from "../../molecules/FriendPot";
+import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
+import { StatusSnackbar } from '../../molecules/StatusSnackbar';
 
 type Friend = {
     id?: string;
@@ -16,7 +17,9 @@ function Home(): ReactElement {
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
     const [isError, setIsError] = useState(false);
-    const [snackBarOpen, setSnackbarOpen] = useState(false);
+    const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
+
+    const successMsg = "You have successfully added your new friend pot! 🎉";
 
     const addFriend = async (name: string) => {
         const newFriend: Friend = {
@@ -36,7 +39,7 @@ function Home(): ReactElement {
             console.error("Failed to create new friend", err);
         }
 
-        setSnackbarOpen(true);
+        setSnackbarIsOpen(true);
     };
 
     const getFriend = useCallback(
@@ -73,7 +76,7 @@ function Home(): ReactElement {
         if (reason === "clickaway") {
             return;
         }
-        setSnackbarOpen(false);
+        setSnackbarIsOpen(false);
     };
 
     return (
@@ -119,23 +122,12 @@ function Home(): ReactElement {
                     addFriend={addFriend}
                 />
                 {newFriend && <FriendPot name={newFriend.name} />}
-                <Snackbar
-                    open={snackBarOpen}
-                    autoHideDuration={6000}
-                    onClose={handleSnackbarClose}
-                >
-                    {isError ? (
-                        <Alert severity="error" onClose={handleSnackbarClose}>
-                            <AlertTitle>Error</AlertTitle>
-                            Something went wrong 🥺 Please try again soon!
-                        </Alert>
-                    ) : (
-                        <Alert severity="success" onClose={handleSnackbarClose}>
-                            <AlertTitle>Success</AlertTitle>
-                            You have successfully added your new friend pot! 🎉
-                        </Alert>
-                    )}
-                </Snackbar>
+                <StatusSnackbar
+                    isOpen={snackBarIsOpen}
+                    handleSnackbarClose={handleSnackbarClose}
+                    isError={isError}
+                    successMsg={successMsg}
+                />
             </Box>
         </Box>
     );

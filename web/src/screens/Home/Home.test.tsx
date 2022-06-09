@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import Home from './Home';
+import Home from './Home.screen';
 
 describe("Home", () => {
     it('should render correctly', () => {
