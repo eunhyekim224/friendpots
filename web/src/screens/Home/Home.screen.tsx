@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
 import { FriendPot } from "../../molecules/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
-import { StatusSnackbar } from '../../molecules/StatusSnackbar';
+import { StatusSnackbar } from "../../molecules/StatusSnackbar";
 
 type Friend = {
     id?: string;
@@ -16,8 +16,10 @@ function Home(): ReactElement {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
-    const [isError, setIsError] = useState(false);
-    const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
+    // const [isError, setIsError] = useState(false);
+    const [snackbarStatus, setSnackbarStatus] = useState<string>();
+
+    // const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
@@ -32,14 +34,15 @@ function Home(): ReactElement {
                 newFriend
             );
             setNewFriendId(addedFriend.id);
+            setSnackbarStatus("success");
+
             closeModal();
         } catch (err) {
             closeModal();
-            setIsError(true);
+            // setIsError(true);
+            setSnackbarStatus("error");
             console.error("Failed to create new friend", err);
         }
-
-        setSnackbarIsOpen(true);
     };
 
     const getFriend = useCallback(
@@ -48,7 +51,7 @@ function Home(): ReactElement {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
                 setNewFriend(friend);
             } catch (err) {
-                setIsError(true);
+                setSnackbarStatus("error");
                 console.error("Failed to fetch new friend", err);
             }
         },
@@ -69,15 +72,15 @@ function Home(): ReactElement {
         setModalIsOpen(false);
     };
 
-    const handleSnackbarClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setSnackbarIsOpen(false);
-    };
+    // const handleSnackbarClose = (
+    //     event?: React.SyntheticEvent | Event,
+    //     reason?: string
+    // ) => {
+    //     if (reason === "clickaway") {
+    //         return;
+    //     }
+    //     setSnackbarIsOpen(false);
+    // };
 
     return (
         <Box
@@ -123,9 +126,10 @@ function Home(): ReactElement {
                 />
                 {newFriend && <FriendPot name={newFriend.name} />}
                 <StatusSnackbar
-                    isOpen={snackBarIsOpen}
-                    handleSnackbarClose={handleSnackbarClose}
-                    isError={isError}
+                    // isOpen={snackBarIsOpen}
+                    // handleSnackbarClose={handleSnackbarClose}
+                    // isError={isError}
+                    status={snackbarStatus}
                     successMsg={successMsg}
                 />
             </Box>
