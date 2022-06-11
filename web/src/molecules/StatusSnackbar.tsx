@@ -1,9 +1,9 @@
 import { Snackbar, Alert, AlertTitle } from "@mui/material";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 
 export type StatusSnackbarProps = {
-    // isOpen: boolean;
-    // handleSnackbarClose: () => void;
+    isOpen: boolean;
+    handleSnackbarClose: () => void;
     // isError: boolean;
     status?: string;
     errorMsg?: string;
@@ -12,33 +12,31 @@ export type StatusSnackbarProps = {
 };
 
 export const StatusSnackbar = ({
-    // isOpen,
-    // handleSnackbarClose,
+    isOpen,
+    handleSnackbarClose,
     // isError,
     status,
     errorMsg,
     successMsg,
     autoHideDuration = 6000,
 }: StatusSnackbarProps): ReactElement => {
-    const [snackBarIsOpen, setSnackbarIsOpen] = useState(!!status);
-    const isError = status === 'error'
-
+    const isError = status === "error";
     const errorText =
         errorMsg ?? "Something went wrong 🥺 Please try again soon!";
 
-    const handleSnackbarClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setSnackbarIsOpen(false);
-    };
+    // const handleSnackbarClose = (
+    //     event?: React.SyntheticEvent | Event,
+    //     reason?: string
+    // ) => {
+    //     if (reason === "clickaway") {
+    //         return;
+    //     }
+    //     setSnackbarIsOpen(false);
+    // };
 
     return (
         <Snackbar
-            open={snackBarIsOpen}
+            open={isOpen}
             autoHideDuration={autoHideDuration}
             onClose={handleSnackbarClose}
         >

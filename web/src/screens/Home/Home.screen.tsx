@@ -19,7 +19,9 @@ function Home(): ReactElement {
     // const [isError, setIsError] = useState(false);
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
 
-    // const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
+    // const snackBarIsOpen = snackbarStatus !== "";
+
+    const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
@@ -35,12 +37,13 @@ function Home(): ReactElement {
             );
             setNewFriendId(addedFriend.id);
             setSnackbarStatus("success");
+            setSnackbarIsOpen(true);
 
             closeModal();
         } catch (err) {
             closeModal();
-            // setIsError(true);
             setSnackbarStatus("error");
+            setSnackbarIsOpen(true);
             console.error("Failed to create new friend", err);
         }
     };
@@ -72,15 +75,15 @@ function Home(): ReactElement {
         setModalIsOpen(false);
     };
 
-    // const handleSnackbarClose = (
-    //     event?: React.SyntheticEvent | Event,
-    //     reason?: string
-    // ) => {
-    //     if (reason === "clickaway") {
-    //         return;
-    //     }
-    //     setSnackbarIsOpen(false);
-    // };
+    const handleSnackbarClose = (
+        event?: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setSnackbarIsOpen(false);
+    };
 
     return (
         <Box
@@ -126,9 +129,8 @@ function Home(): ReactElement {
                 />
                 {newFriend && <FriendPot name={newFriend.name} />}
                 <StatusSnackbar
-                    // isOpen={snackBarIsOpen}
-                    // handleSnackbarClose={handleSnackbarClose}
-                    // isError={isError}
+                    isOpen={snackBarIsOpen}
+                    handleSnackbarClose={handleSnackbarClose}
                     status={snackbarStatus}
                     successMsg={successMsg}
                 />
