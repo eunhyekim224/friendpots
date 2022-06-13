@@ -16,11 +16,7 @@ function Home(): ReactElement {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
-    // const [isError, setIsError] = useState(false);
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
-
-    // const snackBarIsOpen = snackbarStatus !== "";
-
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
@@ -75,13 +71,7 @@ function Home(): ReactElement {
         setModalIsOpen(false);
     };
 
-    const handleSnackbarClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
+    const handleSnackbarClose = () => {
         setSnackbarIsOpen(false);
     };
 

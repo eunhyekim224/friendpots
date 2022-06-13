@@ -20,6 +20,7 @@ export const StatusSnackbar = ({
     successMsg,
     autoHideDuration = 6000,
 }: StatusSnackbarProps): ReactElement => {
+
     const isError = status === "error";
     const errorText =
         errorMsg ?? "Something went wrong 🥺 Please try again soon!";
