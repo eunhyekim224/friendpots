@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
 export const FriendPot = (props: { name: string }): JSX.Element => {
     return (
@@ -9,6 +9,7 @@ export const FriendPot = (props: { name: string }): JSX.Element => {
             gutterBottom
             fontFamily="Sue Ellen Francisco"
             fontSize={50}
+            role={"friend-name"}
         >
             {props.name}
         </Typography>

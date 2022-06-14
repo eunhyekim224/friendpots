@@ -3,16 +3,16 @@ import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
 import { Box, Typography } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
-import { FriendPot } from "../../molecules/FriendPot";
+import { FriendPot } from "../../molecules/FriendPot/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
-import { StatusSnackbar } from "../../molecules/StatusSnackbar";
+import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
 
 type Friend = {
     id?: string;
     name: string;
 };
 
-function Home(): ReactElement {
+export const Home = (): ReactElement => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriendId, setNewFriendId] = useState();
     const [newFriend, setNewFriend] = useState<null | Friend>();
@@ -128,5 +128,3 @@ function Home(): ReactElement {
         </Box>
     );
 }
-
-export default Home;

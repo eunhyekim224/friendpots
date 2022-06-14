@@ -6,53 +6,19 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="MuiBox-root css-zk7dle"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1pe1nd7-MuiTypography-root"
+        role="friend-name"
       >
-        <div
-          class="MuiTypography-root MuiTypography-h1 MuiTypography-gutterBottom css-pgzgnc-MuiTypography-root"
-        >
-          FriendPots
-        </div>
-        <div
-          class="MuiBox-root css-wkpw2c"
-        >
-          <button
-            class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-185w1tz-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            Add a new friendpot
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-        </div>
+        test name
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="MuiBox-root css-zk7dle"
+      class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1pe1nd7-MuiTypography-root"
+      role="friend-name"
     >
-      <div
-        class="MuiTypography-root MuiTypography-h1 MuiTypography-gutterBottom css-pgzgnc-MuiTypography-root"
-      >
-        FriendPots
-      </div>
-      <div
-        class="MuiBox-root css-wkpw2c"
-      >
-        <button
-          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-185w1tz-MuiButtonBase-root-MuiButton-root"
-          tabindex="0"
-          type="button"
-        >
-          Add a new friendpot
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </div>
+      test name
     </div>
   </div>,
   "debug": [Function],
