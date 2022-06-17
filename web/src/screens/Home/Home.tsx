@@ -34,7 +34,6 @@ export const Home = (): ReactElement => {
             setNewFriendId(addedFriend.id);
             setSnackbarStatus("success");
             setSnackbarIsOpen(true);
-
             closeModal();
         } catch (err) {
             closeModal();

@@ -14,7 +14,6 @@ export type StatusSnackbarProps = {
 export const StatusSnackbar = ({
     isOpen,
     handleSnackbarClose,
-    // isError,
     status,
     errorMsg,
     successMsg,
@@ -24,16 +23,6 @@ export const StatusSnackbar = ({
     const isError = status === "error";
     const errorText =
         errorMsg ?? "Something went wrong 🥺 Please try again soon!";
-
-    // const handleSnackbarClose = (
-    //     event?: React.SyntheticEvent | Event,
-    //     reason?: string
-    // ) => {
-    //     if (reason === "clickaway") {
-    //         return;
-    //     }
-    //     setSnackbarIsOpen(false);
-    // };
 
     return (
         <Snackbar
