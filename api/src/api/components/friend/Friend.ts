@@ -8,11 +8,4 @@ export class Friend {
         this.id = id;
         this.name = name;
     }
-
-    getById(): Promise<Friend> {
-        const friendStorePath = "./api/store/friends.json";
-
-        const store = new Store();
-        return store.read<Friend>(friendStorePath, this.id);
-    }
 }

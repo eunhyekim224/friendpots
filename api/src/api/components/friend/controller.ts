@@ -28,8 +28,8 @@ export class FriendController {
                 `http://${req.headers.host}`
             );
             const friendId = parsedUrl.pathname.split("/")[2];
-            const friend = new Friend(friendId);
-            const retrievedFriend = await friend.getById();
+            const friends = new Friends();
+            const retrievedFriend = await friends.getById(friendId);
 
             if (retrievedFriend) {
                 res.writeHead(200);
