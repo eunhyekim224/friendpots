@@ -14,8 +14,7 @@ type Friend = {
 
 export const Home = (): ReactElement => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [newFriendId, setNewFriendId] = useState();
-    const [newFriend, setNewFriend] = useState<null | Friend>();
+    const [newFriend, setNewFriend] = useState<Friend>();
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
@@ -31,9 +30,13 @@ export const Home = (): ReactElement => {
                 "/friends",
                 newFriend
             );
-            setNewFriendId(addedFriend.id);
-            setSnackbarStatus("success");
-            setSnackbarIsOpen(true);
+
+            if (addedFriend) {
+                setNewFriend(addedFriend);
+                setSnackbarStatus("success");
+                setSnackbarIsOpen(true);
+            }
+
             closeModal();
         } catch (err) {
             closeModal();
@@ -53,14 +56,14 @@ export const Home = (): ReactElement => {
                 console.error("Failed to fetch new friend", err);
             }
         },
-        [newFriendId]
+        [newFriend]
     );
 
     useEffect(() => {
-        if (newFriendId) {
-            getFriend(newFriendId);
+        if (newFriend?.id) {
+            getFriend(newFriend.id);
         }
-    }, [newFriendId]);
+    }, [newFriend]);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -126,4 +129,4 @@ export const Home = (): ReactElement => {
             </Box>
         </Box>
     );
-}
+};
