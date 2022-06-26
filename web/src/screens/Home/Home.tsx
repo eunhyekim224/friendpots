@@ -3,7 +3,7 @@ import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
 import { Box, Typography } from "@mui/material";
 import { AddFriendButton } from "./Home.styled";
-import { FriendPot } from "../../molecules/FriendPot/FriendPot";
+import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
 
@@ -51,19 +51,20 @@ export const Home = (): ReactElement => {
             try {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
                 setNewFriend(friend);
+                console.log('friend', friend)
             } catch (err) {
                 setSnackbarStatus("error");
                 console.error("Failed to fetch new friend", err);
             }
         },
-        [newFriend]
+        [newFriend?.id]
     );
 
     useEffect(() => {
         if (newFriend?.id) {
             getFriend(newFriend.id);
         }
-    }, [newFriend]);
+    }, [newFriend?.id]);
 
     const openModal = () => {
         setModalIsOpen(true);

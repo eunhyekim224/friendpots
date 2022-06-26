@@ -4,7 +4,6 @@ import { ReactElement } from "react";
 export type StatusSnackbarProps = {
     isOpen: boolean;
     handleSnackbarClose: () => void;
-    // isError: boolean;
     status?: string;
     errorMsg?: string;
     successMsg?: string;
