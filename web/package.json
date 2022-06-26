@@ -30,6 +30,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "cypress:open": "cypress open",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
@@ -54,6 +55,7 @@
         "@types/react-modal": "^3.13.1",
         "@typescript-eslint/eslint-plugin": "^5.26.0",
         "@typescript-eslint/parser": "^5.26.0",
+        "cypress": "^10.2.0",
         "eslint": "^8.16.0",
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-unused-imports": "^2.0.0"
