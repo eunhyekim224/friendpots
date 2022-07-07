@@ -57,6 +57,7 @@
         "@typescript-eslint/parser": "^5.26.0",
         "cypress": "^10.2.0",
         "eslint": "^8.16.0",
+        "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-unused-imports": "^2.0.0"
     }
