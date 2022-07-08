@@ -1,13 +1,15 @@
-describe('My First Test', () => {
-  it('clicking "type" navigates to a new URL', () => {
-    cy.visit('https://example.cypress.io');
+describe('Home', () => {
+  it('adding a new friendpot displays the name of the new friendpot', () => {
+    cy.visit('http://localhost:3000/');
 
-    cy.contains('type').click();
+    cy.get('#add-friend-button').click();
 
-    cy.url().should('include', '/commands/actions');
+    cy.get('#name')
+        .type('New Friend')
+        .should('have.value', 'New Friend')
 
-    cy.get('#email1')
-        .type('eunhye@test.com')
-        .should('have.value', 'eunhye@test.com')
+    cy.get('.MuiDialogActions-root > :nth-child(2)').click();
+
+    cy.contains('New Friend')
   })
 })

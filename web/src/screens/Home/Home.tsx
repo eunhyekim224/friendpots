@@ -112,6 +112,7 @@ export const Home = (): ReactElement => {
                     variant="contained"
                     onClick={openModal}
                     disableFocusRipple
+                    id='add-friend-button'
                 >
                     Add a new friendpot
                 </AddFriendButton>
