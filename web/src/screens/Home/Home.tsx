@@ -51,7 +51,6 @@ export const Home = (): ReactElement => {
             try {
                 const { data: friend } = await axios.get(`friends/${friendId}`);
                 setNewFriend(friend);
-                console.log('friend', friend)
             } catch (err) {
                 setSnackbarStatus("error");
                 console.error("Failed to fetch new friend", err);
@@ -81,7 +80,6 @@ export const Home = (): ReactElement => {
     return (
         <Box
             sx={{
-                height: "100%",
                 backgroundColor: "#7cb342",
             }}
         >
@@ -112,7 +110,7 @@ export const Home = (): ReactElement => {
                     variant="contained"
                     onClick={openModal}
                     disableFocusRipple
-                    id='add-friend-button'
+                    id="add-friend-button"
                 >
                     Add a new friendpot
                 </AddFriendButton>
