@@ -1,6 +1,6 @@
 describe('Home', () => {
   it('adding a new friendpot displays the name of the new friendpot', () => {
-    cy.visit('http://localhost:3000/');
+    cy.visit('/');
 
     cy.get('#add-friend-button').click();
 
