@@ -25,6 +25,7 @@ export const StatusSnackbar = ({
 
     return (
         <Snackbar
+            id="status-snackbar"
             open={isOpen}
             autoHideDuration={autoHideDuration}
             onClose={handleSnackbarClose}

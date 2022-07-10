@@ -49,10 +49,15 @@ export const AddFriendFormDialog = (
                 />
             </DialogContent>
             <DialogActions>
-                <Button sx={{ color: "green" }} onClick={props.close}>
+                <Button
+                    id="cancel-button"
+                    sx={{ color: "green" }}
+                    onClick={props.close}
+                >
                     Cancel
                 </Button>
                 <Button
+                    id="add-button"
                     sx={{ color: "green" }}
                     onClick={async () => await props.addFriend(name)}
                 >

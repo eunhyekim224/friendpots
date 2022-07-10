@@ -8,8 +8,10 @@ describe('Home', () => {
         .type('New Friend')
         .should('have.value', 'New Friend')
 
-    cy.get('.MuiDialogActions-root > :nth-child(2)').click();
+    cy.get('#add-button').click();
 
     cy.contains('New Friend')
+
+    cy.get('#status-snackbar').contains('Success')
   })
 })
