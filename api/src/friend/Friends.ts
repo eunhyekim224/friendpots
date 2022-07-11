@@ -1,18 +1,16 @@
-import { Store } from '../Store';
-import { Friend } from './Friend';
+import { Store } from "../Store";
+import { Friend } from "./Friend";
 
 export class Friends {
-    save(friend: Friend): Promise<Friend> {
-        const friendStorePath = "./api/store/friends.json";
 
-        const store = new Store();
-        return store.write<Friend>(friendStorePath, friend);
+    friendStorePath = "./api/store/friends.json";
+    store = new Store<Friend>(this.friendStorePath);
+
+    save(friend: Friend): Promise<Friend> {
+        return this.store.write(friend);
     }
 
     getById(id: string): Promise<Friend> {
-        const friendStorePath = "./api/store/friends.json";
-
-        const store = new Store();
-        return store.read<Friend>(friendStorePath, id);
+        return this.store.read(id);
     }
 }

@@ -5,10 +5,17 @@ type StorageItem = {
     [key: string]: string | number | boolean;
 };
 
-export class Store {
-    write<T>(path: string, itemToStore: T): Promise<T> {
+export class Store<T> {
+
+    path;
+
+    constructor(path: string) {
+        this.path = path;
+    }
+
+    write(itemToStore: T): Promise<T> {
         return new Promise((resolve, reject) => {
-            fs.readFile(path, "utf8", (err, data) => {
+            fs.readFile(this.path, "utf8", (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -16,16 +23,16 @@ export class Store {
                     allItems.push(itemToStore);
 
                     const allItemsJson = JSON.stringify(allItems);
-                    fs.writeFileSync(path, allItemsJson);
+                    fs.writeFileSync(this.path, allItemsJson);
                 }
                 resolve(itemToStore);
             });
         });
     }
 
-    read<T>(path: string, id: string): Promise<T> {
+    read(id: string): Promise<T> {
         return new Promise((resolve, reject) => {
-            fs.readFile(path, "utf8", (err, data) => {
+            fs.readFile(this.path, "utf8", (err, data) => {
                 if (err) {
                     reject(err);
                 } else {
