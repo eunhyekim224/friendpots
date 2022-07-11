@@ -1,5 +1,5 @@
 import http from "http";
-import { handler } from './api/routes';
+import { handler } from './routes';
 import dotenv from 'dotenv';
 
 dotenv.config();

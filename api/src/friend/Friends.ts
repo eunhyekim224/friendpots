@@ -1,4 +1,4 @@
-import { Store } from '../../../Store';
+import { Store } from '../Store';
 import { Friend } from './Friend';
 
 export class Friends {

@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { Friend } from "./Friend";
 import { v4 } from "uuid";
-import { requestBody } from "../../../services/requestHandlers";
+import { requestBody } from "../requestHandling/requestHandlers";
 import { Friends } from "./Friends";
 
 export class FriendController {
