@@ -31,6 +31,8 @@ describe("Friend", () => {
                 )}`
             );
 
+            console.log('location', createNewFriendResponse.headers.get('Location'))
+
             const createdFriend = await getFriendResponse.json();
 
             // Assert

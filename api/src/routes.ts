@@ -22,8 +22,10 @@ const controller = (urlPathname: string) => {
     switch (mainResource) {
         case "friends":
             controller = new FriendController();
-        case "/":
+        break;
+        case '':
             controller = new RootController();
+        break;
         default:
             controller = new NotFoundController();
     }
