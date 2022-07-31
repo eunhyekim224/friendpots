@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
-      "target": "es6",
-      "module": "commonjs",
-      "rootDir": "./",
-      "outDir": "build",
-      "esModuleInterop": true,
-      "strict": true,
-      "sourceMap": true
-    }
+        "target": "es6",
+        "module": "commonjs",
+        "rootDir": "./",
+        "outDir": "build",
+        "esModuleInterop": true,
+        "strict": true,
+        "sourceMap": true,
+        "resolveJsonModule": true
+    },
+    "include": ["**/*.json", "src"]
 }
