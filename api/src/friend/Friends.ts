@@ -1,15 +1,13 @@
-import path, { dirname } from 'path';
+import path, { dirname } from "path";
 import { Store } from "../Store";
 import { Friend } from "./Friend";
 
 export class Friends {
-    friendStorePath = __dirname + `/../../store/friends.json`; 
+    friendStorePath = __dirname + `/../../store/friends.json`;
 
     store = new Store<Friend>(this.friendStorePath);
 
     save(friend: Friend): Promise<Friend> {
-        console.log("path", this.friendStorePath);
-
         return this.store.write(friend);
     }
 
