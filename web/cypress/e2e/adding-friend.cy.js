@@ -5,9 +5,9 @@ describe("Home", () => {
 
         cy.visit("/");
 
-        cy.get("#log-in-id").type(testUserId);
+        cy.get("#login-id").type(testUserId);
 
-        cy.get("#log-in-button").click();
+        cy.get("#login-button").click();
 
         cy.get("#status-snackbar").contains("Success");
     });

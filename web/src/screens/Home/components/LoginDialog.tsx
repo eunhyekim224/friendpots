@@ -44,7 +44,7 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
                 <TextField
                     autoFocus={true}
                     margin="dense"
-                    id="name"
+                    id="login-id"
                     label="e.g. friendpots@gmail.com"
                     type="text"
                     variant="standard"
@@ -56,7 +56,7 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
             </DialogContent>
             <DialogActions>
                 <Button
-                    id="add-button"
+                    id="login-button"
                     sx={{ color: "green" }}
                     // onClick={async () => await props.login(name)}
                 >
