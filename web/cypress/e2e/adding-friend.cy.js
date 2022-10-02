@@ -1,17 +1,28 @@
-describe('Home', () => {
-  it('adding a new friendpot displays the name of the new friendpot', () => {
-    cy.visit('/');
+describe("Home", () => {
+    it("logs in the user using their email", () => {
 
-    cy.get('#add-friend-button').click();
+        const testUserId = "test@friendpots.com";
 
-    cy.get('#name')
-        .type('New Friend')
-        .should('have.value', 'New Friend')
+        cy.visit("/");
 
-    cy.get('#add-button').click();
+        cy.get("#log-in-id").type(testUserId);
 
-    cy.contains('New Friend')
+        cy.get("#log-in-button").click();
 
-    cy.get('#status-snackbar').contains('Success')
-  })
-})
+        cy.get("#status-snackbar").contains("Success");
+    });
+
+    it("adding a new friendpot displays the name of the new friendpot", () => {
+        cy.visit("/");
+
+        cy.get("#add-friend-button").click();
+
+        cy.get("#name").type("New Friend").should("have.value", "New Friend");
+
+        cy.get("#add-button").click();
+
+        cy.contains("New Friend");
+
+        cy.get("#status-snackbar").contains("Success");
+    });
+});
