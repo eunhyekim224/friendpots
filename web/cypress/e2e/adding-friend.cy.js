@@ -1,19 +1,12 @@
 describe("Home", () => {
-    it("logs in the user using their email", () => {
+    it("adding a new friendpot displays the name of the new friendpot", () => {
+        cy.visit("/");
 
         const testUserId = "test@friendpots.com";
 
-        cy.visit("/");
-
+        // Log user in with their email
         cy.get("#login-id").type(testUserId);
-
         cy.get("#login-button").click();
-
-        cy.get("#status-snackbar").contains("Success");
-    });
-
-    it("adding a new friendpot displays the name of the new friendpot", () => {
-        cy.visit("/");
 
         cy.get("#add-friend-button").click();
 

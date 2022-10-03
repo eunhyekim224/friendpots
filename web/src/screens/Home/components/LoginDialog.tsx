@@ -41,6 +41,7 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
             onClose={props.close}
             maxWidth="sm"
             fullWidth={true}
+            id="login-dialog"
         >
             <DialogTitle sx={{ color: "green" }}>
                 Welcome to Friendpots!
