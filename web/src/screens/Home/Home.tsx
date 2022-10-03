@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Box, Modal, Typography } from "@mui/material";
-import { AddFriendButton } from "./Home.styled";
+import { Box, Button, Typography } from "@mui/material";
+import { AddFriendButton, LogoutButton } from "./Home.styled";
 import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
@@ -62,19 +62,21 @@ export const Home = (): ReactElement => {
         [newFriend?.id]
     );
 
-    const showLoginModal = () => {
-        setLoginModalOpen(true);
+    const userIdFromLocal = () => {
+        const userId = JSON.parse(localStorage.getItem("userId") as string);
+        console.log('userId from storage', userId)
+        if (userId) setUserId(userId);
     };
 
     useEffect(() => {
-        if (!userId) {
-            showLoginModal();
-        }
+        console.log("userId", userId);
+        userIdFromLocal();
+        setLoginModalOpen(!userId);
 
         if (newFriend?.id) {
             getFriend(newFriend.id);
         }
-    }, [newFriend?.id]);
+    }, [newFriend?.id, userId]);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -85,49 +87,20 @@ export const Home = (): ReactElement => {
     };
 
     const closeLoginModal = () => {
-        setLoginModalOpen(false);
+        if (userId) {
+            setLoginModalOpen(false);
+        }
     };
 
     const handleSnackbarClose = () => {
         setSnackbarIsOpen(false);
     };
 
-    const loginModalStyle = {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: 400,
-        bgcolor: "background.paper",
-        border: "2px solid #000",
-        boxShadow: 24,
-        p: 4,
-    };
-
-    // const LoginModal = (): ReactElement => {
-    //     return (
-    //         <Modal
-    //             open={isLoginModalOpen}
-    //             onClose={closeLoginModal}
-    //             aria-labelledby="modal-modal-title"
-    //             aria-describedby="modal-modal-description"
-    //         >
-    //             <Box sx={loginModalStyle}>
-    //                 <Typography
-    //                     id="modal-modal-title"
-    //                     variant="h6"
-    //                     component="h2"
-    //                 >
-    //                     Enter your unique email:
-    //                 </Typography>
-    //                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-    //                     Duis mollis, est non commodo luctus, nisi erat porttitor
-    //                     ligula.
-    //                 </Typography>
-    //             </Box>
-    //         </Modal>
-    //     );
-    // };
+    const logout = () => {
+        localStorage.clear();
+        setUserId("");
+        console.log('You\'ve successfully logged out!');
+    }
 
     return (
         <Box
@@ -139,9 +112,12 @@ export const Home = (): ReactElement => {
                 <LoginDialog
                     isOpen={isLoginModalOpen}
                     close={closeLoginModal}
-                    // login={(userId) => {}}
+                    saveUserId={setUserId}
                 />
             )}
+
+            <LogoutButton onClick={logout}>Log out</LogoutButton>
+
             <Typography
                 variant="h1"
                 component="div"
@@ -178,6 +154,7 @@ export const Home = (): ReactElement => {
                     close={closeModal}
                     addFriend={addFriend}
                 />
+
                 {newFriend && <FriendPot name={newFriend.name} />}
                 <StatusSnackbar
                     isOpen={snackBarIsOpen}

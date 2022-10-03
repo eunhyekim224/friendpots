@@ -12,7 +12,7 @@ import { useState } from "react";
 type LoginDialogProps = {
     isOpen: boolean;
     close: () => void;
-    // login: (userId: string) => Promise<void>;
+    saveUserId: (userId: string) => void
 };
 
 export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
@@ -22,11 +22,18 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
         setUserId(event.target.value);
     };
 
-    // const handleKeyPress = async (event: React.KeyboardEvent) => {
-    //     if (event.key === "Enter") {
-    //         await props.login(userId);
-    //     }
-    // };
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            saveUserIdInLocal(userId)
+            const userId2 = JSON.parse(localStorage.getItem('userId') as string)
+            console.log(userId2)
+        }
+    };
+
+    const saveUserIdInLocal = (userId: string) => {
+        localStorage.setItem('userId', JSON.stringify(userId))
+        props.saveUserId(userId);
+    }
 
     return (
         <Dialog
@@ -35,11 +42,14 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
             maxWidth="sm"
             fullWidth={true}
         >
-            <DialogTitle sx={{ color: "green" }}>Welcome to Friendpots!</DialogTitle>
+            <DialogTitle sx={{ color: "green" }}>
+                Welcome to Friendpots!
+            </DialogTitle>
 
             <DialogContent>
                 <DialogContentText>
-                    To add and view your friendpots, please enter your email address here. 
+                    To add and view your friendpots, please enter your email
+                    address here.
                 </DialogContentText>
                 <TextField
                     autoFocus={true}
@@ -51,14 +61,14 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
                     fullWidth
                     color="success"
                     onChange={handleUserIdChange}
-                    // onKeyDown={handleKeyPress}
+                    onKeyDown={handleKeyPress}
                 />
             </DialogContent>
             <DialogActions>
                 <Button
                     id="login-button"
                     sx={{ color: "green" }}
-                    // onClick={async () => await props.login(name)}
+                    onClick={() => saveUserIdInLocal(userId)}
                 >
                     Enter
                 </Button>
