@@ -6,7 +6,6 @@ type StorageItem = {
 };
 
 export class Store<T> {
-
     path;
 
     constructor(path: string) {
@@ -41,6 +40,22 @@ export class Store<T> {
                         (item: StorageItem) => item.id === id
                     );
                     resolve(itemToRetrieve);
+                }
+            });
+        });
+    }
+
+    readByUser(id: string): Promise<T[]> {
+        return new Promise((resolve, reject) => {
+            fs.readFile(this.path, "utf8", (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const allItems = JSON.parse(data);
+                    const itemsToRetrieve: T[] = allItems.filter(
+                        (item: StorageItem) => item.userId === id
+                    );
+                    resolve(itemsToRetrieve);
                 }
             });
         });

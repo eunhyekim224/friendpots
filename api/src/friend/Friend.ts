@@ -1,5 +1,3 @@
-import { Store } from "../Store";
-
 export class Friend {
     id;
     name;

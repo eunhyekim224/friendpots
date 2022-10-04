@@ -6,7 +6,7 @@ type FriendDTO = {
     name: string;
 };
 
-describe("Friend", () => {
+describe("Friends", () => {
     describe("Request to create a new friend", () => {
         it("should create a new friend", async () => {
             // Arrange
