@@ -31,8 +31,8 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
     };
 
     const saveUserIdInLocal = (userId: string) => {
-        localStorage.setItem('userId', JSON.stringify(userId))
-        props.saveUserId(userId);
+        localStorage.setItem('userId', JSON.stringify(userId.trim()))
+        props.saveUserId(userId.trim());
     }
 
     return (
