@@ -3,23 +3,28 @@ import { Friend } from "./Friend";
 import { v4 } from "uuid";
 import { requestBody } from "../requestHandling/requestHandlers";
 import { Friends } from "./Friends";
+import { Users } from "../user/Users";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
         if (req.method === "POST") {
-
             const requestData = await requestBody(req);
 
             req.on("end", async () => {
                 const friendDTO = JSON.parse(requestData) as FriendDTO;
 
                 const friendId = v4();
-                const friend = new Friend(friendId, friendDTO.name);
+                const friend = new Friend(
+                    friendId,
+                    friendDTO.userId,
+                    friendDTO.name
+                );
+
                 const friends = new Friends();
 
                 const savedFriend = await friends.save(friend);
 
-                res.writeHead(201, { Location: `friends/${friendId}` });
+                res.writeHead(201, { Location: `/friends/${friendId}` });
                 res.end(JSON.stringify(savedFriend));
             });
         } else if (req.method === "GET") {
@@ -27,8 +32,11 @@ export class FriendController {
                 req.url as string,
                 `http://${req.headers.host}`
             );
+
             const friendId = parsedUrl.pathname.split("/")[2];
+
             const friends = new Friends();
+
             const retrievedFriend = await friends.getById(friendId);
 
             if (retrievedFriend) {
@@ -45,4 +53,5 @@ export class FriendController {
 
 export type FriendDTO = {
     name: string;
+    userId: string;
 };

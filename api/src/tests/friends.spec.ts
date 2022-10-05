@@ -3,6 +3,7 @@ import { describe, it } from "mocha";
 import assert from "assert";
 
 type FriendDTO = {
+    userId: string;
     name: string;
 };
 
@@ -10,7 +11,10 @@ describe("Friends", () => {
     describe("Request to create a new friend", () => {
         it("should create a new friend", async () => {
             // Arrange
-            const testFriendDto: FriendDTO = { name: "New Test Friend" };
+            const testFriendDto: FriendDTO = {
+                userId: "test@gmail.com",
+                name: "New Test Friend",
+            };
 
             const requestOptions = {
                 method: "POST",
@@ -25,13 +29,17 @@ describe("Friends", () => {
             );
             const testFriend = await createNewFriendResponse.json();
 
+            const friendLocation =
+                createNewFriendResponse.headers.get("Location");
+
             const getFriendResponse = await fetch(
-                `http://localhost:8000/${createNewFriendResponse.headers.get(
-                    "Location"
-                )}`
+                `http://localhost:8000/${friendLocation}`
             );
 
-            console.log('location', createNewFriendResponse.headers.get('Location'))
+            console.log(
+                "location",
+                createNewFriendResponse.headers.get("Location")
+            );
 
             const createdFriend = await getFriendResponse.json();
 
@@ -45,6 +53,6 @@ describe("Friends", () => {
             assert.strictEqual(getFriendIsSuccessful, true);
 
             assert.deepStrictEqual(testFriend, createdFriend);
-        }); 
+        });
     });
 });
