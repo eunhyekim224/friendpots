@@ -117,7 +117,7 @@ export const Home = (): ReactElement => {
                 />
             )}
 
-            <LogoutButton onClick={logout}>Log out</LogoutButton>
+            <LogoutButton id={"logout-button"} onClick={logout}>Log out</LogoutButton>
 
             <Typography
                 variant="h1"

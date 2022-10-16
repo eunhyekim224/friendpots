@@ -3,6 +3,9 @@ describe("Home", () => {
         cy.visit("/");
 
         const testUserId = "test@friendpots.com";
+        const newFriend = {
+            name: "Jam"
+        }
 
         // Log user in with their email
         cy.get("#login-id").type(testUserId);
@@ -10,11 +13,11 @@ describe("Home", () => {
 
         cy.get("#add-friend-button").click();
 
-        cy.get("#name").type("New Friend").should("have.value", "New Friend");
+        cy.get("#name").type(newFriend.name).should("have.value", newFriend.name);
 
         cy.get("#add-button").click();
 
-        cy.contains("New Friend");
+        cy.contains(newFriend.name);
 
         cy.get("#status-snackbar").contains("Success");
     });
