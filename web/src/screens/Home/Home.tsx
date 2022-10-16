@@ -17,7 +17,7 @@ export const Home = (): ReactElement => {
     const [userId, setUserId] = useState("");
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [newFriend, setNewFriend] = useState<Friend>();
+    const [newFriend, setNewFriend] = useState<Friend | null>();
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
@@ -99,6 +99,7 @@ export const Home = (): ReactElement => {
     const logout = () => {
         localStorage.clear();
         setUserId("");
+        setNewFriend(null);
         console.log('You\'ve successfully logged out!');
     }
 
