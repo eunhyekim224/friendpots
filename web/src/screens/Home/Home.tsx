@@ -21,6 +21,21 @@ export const Home = (): ReactElement => {
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
+    const friends = [
+        {
+            id: 'id1',
+            name: "Friend1",
+        },
+        {
+            id: 'id2',
+            name: "Friend2",
+        },
+        {
+            id: 'id3',
+            name: "Friend3",
+        },
+    ];
+
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
     const addFriend = async (name: string) => {
@@ -64,7 +79,7 @@ export const Home = (): ReactElement => {
 
     const userIdFromLocal = () => {
         const userId = JSON.parse(localStorage.getItem("userId") as string);
-        console.log('userId from storage', userId)
+        console.log("userId from storage", userId);
         if (userId) setUserId(userId);
     };
 
@@ -100,8 +115,12 @@ export const Home = (): ReactElement => {
         localStorage.clear();
         setUserId("");
         setNewFriend(null);
-        console.log('You\'ve successfully logged out!');
-    }
+        console.log("You've successfully logged out!");
+    };
+
+    const friendpots = friends.map((friend) => {
+        return <FriendPot name={friend.name} key={friend.id}/>;
+    });
 
     return (
         <Box
@@ -117,7 +136,9 @@ export const Home = (): ReactElement => {
                 />
             )}
 
-            <LogoutButton id={"logout-button"} onClick={logout}>Log out</LogoutButton>
+            <LogoutButton id={"logout-button"} onClick={logout}>
+                Log out
+            </LogoutButton>
 
             <Typography
                 variant="h1"
@@ -155,8 +176,17 @@ export const Home = (): ReactElement => {
                     close={closeModal}
                     addFriend={addFriend}
                 />
-
-                {newFriend && <FriendPot name={newFriend.name} />}
+                {/* {newFriend && <FriendPot name={newFriend.name} />} */}
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "60%"
+                    }}
+                >
+                    {friendpots}
+                </Box>
                 <StatusSnackbar
                     isOpen={snackBarIsOpen}
                     handleSnackbarClose={handleSnackbarClose}
