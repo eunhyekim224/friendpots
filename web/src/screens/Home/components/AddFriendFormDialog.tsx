@@ -55,7 +55,7 @@ export const AddFriendFormDialog = (
                     onClick={props.close}
                 >
                     Cancel
-                </Button>
+                </Button> 
                 <Button
                     id="add-button"
                     sx={{ color: "green" }}

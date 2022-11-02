@@ -10,6 +10,7 @@ import { LoginDialog } from "./components/LoginDialog";
 
 type Friend = {
     id?: string;
+    userId: string;
     name: string;
 };
 
@@ -18,29 +19,16 @@ export const Home = (): ReactElement => {
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [newFriend, setNewFriend] = useState<Friend | null>();
+    const [friends, setFriends] = useState<Friend[] | null>();
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
-
-    const friends = [
-        {
-            id: 'id1',
-            name: "Friend1",
-        },
-        {
-            id: 'id2',
-            name: "Friend2",
-        },
-        {
-            id: 'id3',
-            name: "Friend3",
-        },
-    ];
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
     const addFriend = async (name: string) => {
         const newFriend: Friend = {
             name,
+            userId
         };
 
         try {
@@ -77,21 +65,36 @@ export const Home = (): ReactElement => {
         [newFriend?.id]
     );
 
+    const getFriends = useCallback(
+        async (userId: string) => {
+            console.log("getting new friends ", userId);
+
+            try {
+                const { data: friends } = await axios.get(
+                    `friends?userId=${userId}`
+                );
+                setFriends(friends);
+            } catch (err) {
+                setSnackbarStatus("error");
+                console.error("Failed to fetch friends", err);
+            }
+        },
+        [friends]
+    );
+
     const userIdFromLocal = () => {
         const userId = JSON.parse(localStorage.getItem("userId") as string);
         console.log("userId from storage", userId);
-        if (userId) setUserId(userId);
+        if (userId) {
+            setUserId(userId);
+            getFriends(userId);
+        }
     };
 
     useEffect(() => {
-        console.log("userId", userId);
         userIdFromLocal();
         setLoginModalOpen(!userId);
-
-        if (newFriend?.id) {
-            getFriend(newFriend.id);
-        }
-    }, [newFriend?.id, userId]);
+    }, [userId]);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -114,12 +117,12 @@ export const Home = (): ReactElement => {
     const logout = () => {
         localStorage.clear();
         setUserId("");
-        setNewFriend(null);
+        setFriends(null);
         console.log("You've successfully logged out!");
     };
 
-    const friendpots = friends.map((friend) => {
-        return <FriendPot name={friend.name} key={friend.id}/>;
+    const friendpots = friends?.map((friend) => {
+        return <FriendPot name={friend.name} key={friend.id} />;
     });
 
     return (
@@ -180,9 +183,10 @@ export const Home = (): ReactElement => {
                 <Box
                     sx={{
                         display: "flex",
+                        flexWrap: "wrap",
                         flexDirection: "row",
                         justifyContent: "space-between",
-                        width: "60%"
+                        width: "60%",
                     }}
                 >
                     {friendpots}
