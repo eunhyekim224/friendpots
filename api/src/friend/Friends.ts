@@ -14,4 +14,8 @@ export class Friends {
     getById(id: string): Promise<Friend> {
         return this.store.read(id);
     }
+
+    getAllBy(userId: string): Promise<Friend[]> {
+        return this.store.readByUser(userId);
+    }
 }

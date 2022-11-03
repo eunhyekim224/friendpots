@@ -33,15 +33,23 @@ export class FriendController {
                 `http://${req.headers.host}`
             );
 
+            const userId = parsedUrl.searchParams.get("userId");
             const friendId = parsedUrl.pathname.split("/")[2];
 
+            let friendData;
             const friends = new Friends();
 
-            const retrievedFriend = await friends.getById(friendId);
+            if (userId) {
+                friendData = await friends.getAllBy(userId);
+            }
 
-            if (retrievedFriend) {
+            if (friendId) {
+                friendData = await friends.getById(friendId);
+            }
+
+            if (friendData) {
                 res.writeHead(200);
-                res.end(JSON.stringify(retrievedFriend));
+                res.end(JSON.stringify(friendData));
             } else {
                 res.writeHead(404);
                 res.end();
