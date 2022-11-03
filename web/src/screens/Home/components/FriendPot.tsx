@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 export const FriendPot = (props: { name: string }): JSX.Element => {
     return (
         <Box
-           id={'friendpot'}
+           id={`friendpot`}
         >
             <Typography
                 variant="h5"

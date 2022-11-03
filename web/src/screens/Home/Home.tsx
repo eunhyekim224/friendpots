@@ -18,7 +18,6 @@ export const Home = (): ReactElement => {
     const [userId, setUserId] = useState("");
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [newFriend, setNewFriend] = useState<Friend | null>();
     const [friends, setFriends] = useState<Friend[] | null>();
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
@@ -38,7 +37,7 @@ export const Home = (): ReactElement => {
             );
 
             if (addedFriend) {
-                setNewFriend(addedFriend);
+                getFriends(userId);
                 setSnackbarStatus("success");
                 setSnackbarIsOpen(true);
             }
@@ -51,19 +50,6 @@ export const Home = (): ReactElement => {
             console.error("Failed to create new friend", err);
         }
     };
-
-    const getFriend = useCallback(
-        async (friendId: string) => {
-            try {
-                const { data: friend } = await axios.get(`friends/${friendId}`);
-                setNewFriend(friend);
-            } catch (err) {
-                setSnackbarStatus("error");
-                console.error("Failed to fetch new friend", err);
-            }
-        },
-        [newFriend?.id]
-    );
 
     const getFriends = useCallback(
         async (userId: string) => {
@@ -179,7 +165,6 @@ export const Home = (): ReactElement => {
                     close={closeModal}
                     addFriend={addFriend}
                 />
-                {/* {newFriend && <FriendPot name={newFriend.name} />} */}
                 <Box
                     sx={{
                         display: "flex",
