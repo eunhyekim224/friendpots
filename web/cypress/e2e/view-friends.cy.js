@@ -2,8 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 
 describe("Home", () => {
     it("shows all my friends", () => {
-        cy.visit("/");
-
         //Given there's a user and the user has a friend
         const testUserId = `${uuidv4()}@friendpots.com`;
         const friend1 = {
@@ -17,6 +15,8 @@ describe("Home", () => {
         };
 
         //When the user lands on the homepage, enters email, and add a friend, and log out, and log back in
+
+        cy.visit("/");
 
         //1. Log in
         cy.get("#login-id").type(testUserId);

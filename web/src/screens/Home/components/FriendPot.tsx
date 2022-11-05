@@ -1,9 +1,15 @@
 import { Box, Typography } from "@mui/material";
 
-export const FriendPot = (props: { name: string }): JSX.Element => {
+type FriendPotProps = {
+    name: string;
+    id: string;
+    key?: string;
+};
+
+export const FriendPot = ({id, name}: FriendPotProps): JSX.Element => {
     return (
         <Box
-           id={`friendpot`}
+           id={id}
         >
             <Typography
                 variant="h5"
@@ -14,7 +20,7 @@ export const FriendPot = (props: { name: string }): JSX.Element => {
                 fontSize={50}
                 role={"friend-name"}
             >
-                {props.name}
+                {name}
             </Typography>
         </Box>
     );
