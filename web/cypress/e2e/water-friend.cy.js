@@ -26,9 +26,10 @@ describe("Friend", () => {
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
-        cy.get("#hardiness")
-            .type(newFriend.hardiness)
-            .should("have.value", newFriend.hardiness);
+        const hardinessLevelElement = `span[data-index=${
+            newFriend.hardiness
+        }]`;
+        cy.get(hardinessLevelElement).click();
 
         cy.get("#add-button").click();
         cy.contains(newFriend.name);

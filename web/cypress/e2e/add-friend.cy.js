@@ -5,6 +5,7 @@ describe("Home", () => {
         const testUserId = `${uuidv4()}@friendpots.com`;
         const newFriend = {
             name: "Jam",
+            hardiness: "8",
         };
 
         cy.visit("/");
@@ -18,10 +19,15 @@ describe("Home", () => {
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
+        const hardinessLevelElement = `span[data-index=${
+            newFriend.hardiness
+        }]`;
+        cy.get(hardinessLevelElement).click();
+
         cy.get("#add-button").click();
 
         cy.get("#status-snackbar").contains("Success");
 
-        cy.get('div').contains(newFriend.name)
+        cy.get("div").contains(newFriend.name);
     });
 });

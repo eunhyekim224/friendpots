@@ -12,6 +12,7 @@ type Friend = {
     id?: string;
     userId: string;
     name: string;
+    hardiness: string;
 };
 
 export const Home = (): ReactElement => {
@@ -24,10 +25,11 @@ export const Home = (): ReactElement => {
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
-    const addFriend = async (name: string) => {
+    const addFriend = async (name: string, hardiness: string) => {
         const newFriend: Friend = {
+            userId,
             name,
-            userId
+            hardiness,
         };
 
         try {
@@ -108,7 +110,13 @@ export const Home = (): ReactElement => {
     };
 
     const friendpots = friends?.map((friend) => {
-        return <FriendPot name={friend.name} key={friend.id} id={`friendpot-${friend.id}`}/>;
+        return (
+            <FriendPot
+                name={friend.name}
+                key={friend.id}
+                id={`friendpot-${friend.id}`}
+            />
+        );
     });
 
     return (

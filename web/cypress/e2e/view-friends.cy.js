@@ -6,11 +6,13 @@ describe("Home", () => {
         const testUserId = `${uuidv4()}@friendpots.com`;
         const friend1 = {
             name: "Jamiel",
+            hardiness: 5,
             userId: testUserId,
         };
 
         const friend2 = {
             name: "Ely",
+            hardiness: 2,
             userId: testUserId,
         };
 
@@ -25,12 +27,24 @@ describe("Home", () => {
         //2. Successfully adds friends
         cy.get("#add-friend-button").click();
         cy.get("#name").type(friend1.name).should("have.value", friend1.name);
+
+        const friend1HardinessLevelElement = `span[data-index=${
+            friend1.hardiness
+        }]`;
+        cy.get(friend1HardinessLevelElement).click();
+
         cy.get("#add-button").click();
         cy.contains(friend1.name);
         cy.get("#status-snackbar").contains("Success");
 
         cy.get("#add-friend-button").click();
         cy.get("#name").type(friend2.name).should("have.value", friend2.name);
+
+        const friend2HardinessLevelElement = `span[data-index=${
+            friend2.hardiness
+        }]`;
+        cy.get(friend2HardinessLevelElement).click();
+
         cy.get("#add-button").click();
         cy.contains(friend2.name);
         cy.get("#status-snackbar").contains("Success");
