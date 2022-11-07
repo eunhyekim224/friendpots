@@ -8,12 +8,7 @@ import {
     TextField,
 } from "@mui/material";
 import { useState } from "react";
-
-type LoginDialogProps = {
-    isOpen: boolean;
-    close: () => void;
-    saveUserId: (userId: string) => void
-};
+import { LoginDialogProps } from "../Home.types";
 
 export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
     const [userId, setUserId] = useState<string>("");
@@ -24,16 +19,18 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
-            saveUserIdInLocal(userId)
-            const userId2 = JSON.parse(localStorage.getItem('userId') as string)
-            console.log(userId2)
+            saveUserIdInLocal(userId);
+            const userId2 = JSON.parse(
+                localStorage.getItem("userId") as string
+            );
+            console.log(userId2);
         }
     };
 
     const saveUserIdInLocal = (userId: string) => {
-        localStorage.setItem('userId', JSON.stringify(userId.trim()))
+        localStorage.setItem("userId", JSON.stringify(userId.trim()));
         props.saveUserId(userId.trim());
-    }
+    };
 
     return (
         <Dialog

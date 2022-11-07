@@ -7,13 +7,7 @@ import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
 import { LoginDialog } from "./components/LoginDialog";
-
-type Friend = {
-    id?: string;
-    userId: string;
-    name: string;
-    hardiness: string;
-};
+import { Friend } from "./Home.types";
 
 export const Home = (): ReactElement => {
     const [userId, setUserId] = useState("");
@@ -113,6 +107,7 @@ export const Home = (): ReactElement => {
         return (
             <FriendPot
                 name={friend.name}
+                state={friend.state}
                 key={friend.id}
                 id={`friendpot-${friend.id}`}
             />

@@ -1,19 +1,23 @@
 import { Box, Typography } from "@mui/material";
+import { FriendPotProps, FriendPotState } from "../Home.types";
 
-type FriendPotProps = {
-    name: string;
-    id: string;
-    key?: string;
-};
+export const FriendPot = ({ id, name, state }: FriendPotProps): JSX.Element => {
+    const friendPotColor = () => {
+        switch (state) {
+            case FriendPotState.HEALTHY:
+                return "green";
+            case FriendPotState.UNHEALTHY:
+                return "red";
+            default:
+                return "black";
+        }
+    };
 
-export const FriendPot = ({id, name}: FriendPotProps): JSX.Element => {
     return (
-        <Box
-           id={id}
-        >
+        <Box id={id}>
             <Typography
                 variant="h5"
-                sx={{ marginTop: "100px" }}
+                sx={{ color: friendPotColor() }}
                 component="div"
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"

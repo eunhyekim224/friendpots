@@ -41,7 +41,7 @@ describe("Friend", () => {
         const newFriendPot = cy.get("div").contains(newFriend.name);
 
         newFriendPot
-            .should("have.css", "background-color")
+            .should("have.css", "color")
             .and("be.colored", "green");
 
         // When the number of days that they can go without water has passed
