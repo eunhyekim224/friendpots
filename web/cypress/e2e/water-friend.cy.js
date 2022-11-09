@@ -4,65 +4,50 @@ chai.use(chaiColors);
 
 describe("Friend", () => {
     it("can have different states", () => {
-        // Given a user and a friendpot
-        const testUserId = `${uuidv4()}@friendpots.com`;
-        const newFriend = {
-            name: "Jamster",
-            hardiness: 1,
-        };
 
-        // When the user logs in, visits the site and creates the friendpot
-        cy.clock();
-        cy.visit("/");
+        // Given a user and a friendpot that is in UNHEALTHY state
+        // When the user logs in, visits the site and views their friendpot
+        // It should be red
+        // When the user waters the friendpot
+        // It should be green
 
-        //1. Log in
-        cy.get("#login-id").type(testUserId);
-        cy.get("#login-button").click();
+        // // Given a user and a friendpot
+        // const testUserId = `${uuidv4()}@friendpots.com`;
+        // const newFriend = {
+        //     name: "Jamster",
+        //     hardiness: 1,
+        // };
 
-        //2. Successfully adds friendpot
-        cy.get("#add-friend-button").click();
+        // // When the user logs in, visits the site and creates the friendpot
+        // cy.visit("/");
 
-        cy.get("#name")
-            .type(newFriend.name)
-            .should("have.value", newFriend.name);
+        // //1. Log in
+        // cy.get("#login-id").type(testUserId);
+        // cy.get("#login-button").click();
 
-        const hardinessLevelElement = `span[data-index=${
-            newFriend.hardiness
-        }]`;
-        cy.get(hardinessLevelElement).click();
+        // //2. Successfully adds friendpot
+        // cy.get("#add-friend-button").click();
 
-        cy.get("#add-button").click();
-        cy.contains(newFriend.name);
+        // cy.get("#name")
+        //     .type(newFriend.name)
+        //     .should("have.value", newFriend.name);
 
-        cy.get("#status-snackbar").contains("Success");
+        // const hardinessLevelElement = `span[data-index=${
+        //     newFriend.hardiness
+        // }]`;
+        // cy.get(hardinessLevelElement).click();
 
-        // It should be in a healthy state
+        // cy.get("#add-button").click();
+        // cy.contains(newFriend.name);
 
-        const newFriendPot = cy.get("div").contains(newFriend.name);
+        // cy.get("#status-snackbar").contains("Success");
 
-        newFriendPot
-            .should("have.css", "color")
-            .and("be.colored", "green");
+        // // It should be in a healthy state
 
-        // When the number of days that they can go without water has passed
+        // const newFriendPot = cy.get("div").contains(newFriend.name);
 
-        cy.tick("86400000");
-
-        // It should be in an unhealthy state
-
-        newFriendPot
-            .should("have.css", "background-color")
-            .and("be.colored", "red");
-
-        // When it is watered
-        newFriendPot.get("#water-button").click();
-
-        // It should be in a healthy state again
-        newFriendPot
-            .should("have.css", "background-color")
-            .and("be.colored", "green");
-
-        // restore clock
-        cy.clock().invoke("restore");
+        // newFriendPot
+        //     .should("have.css", "color")
+        //     .and("be.colored", "green");
     });
 });

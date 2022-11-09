@@ -28,6 +28,9 @@ describe("Home", () => {
 
         cy.get("#status-snackbar").contains("Success");
 
-        cy.get("div").contains(newFriend.name);
+        cy.get("div")
+            .contains(newFriend.name)
+            .should("have.css", "color")
+            .and("be.colored", "green");
     });
 });
