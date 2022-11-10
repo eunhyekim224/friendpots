@@ -4,50 +4,38 @@ chai.use(chaiColors);
 
 describe("Friend", () => {
     it("can have different states", () => {
-
         // Given a user and a friendpot that is in UNHEALTHY state
-        // When the user logs in, visits the site and views their friendpot
-        // It should be red
-        // When the user waters the friendpot
-        // It should be green
+        const testUserId = `${uuidv4()}@friendpots.com`;
+        const newFriend = {
+            name: "Jamster",
+            hardiness: 0,
+        };
 
-        // // Given a user and a friendpot
-        // const testUserId = `${uuidv4()}@friendpots.com`;
-        // const newFriend = {
-        //     name: "Jamster",
-        //     hardiness: 1,
-        // };
+        // When the user logs in, visits the site and creates the friendpot
+        cy.visit("/");
 
-        // // When the user logs in, visits the site and creates the friendpot
-        // cy.visit("/");
+        cy.get("#login-id").type(testUserId);
+        cy.get("#login-button").click();
 
-        // //1. Log in
-        // cy.get("#login-id").type(testUserId);
-        // cy.get("#login-button").click();
+        cy.get("#add-friend-button").click();
+        cy.get("#name")
+            .type(newFriend.name)
+            .should("have.value", newFriend.name);
 
-        // //2. Successfully adds friendpot
-        // cy.get("#add-friend-button").click();
+        const hardinessLevelElement = `span[data-index=${
+            newFriend.hardiness
+        }]`;
+        cy.get(hardinessLevelElement).first().click({force: true});
 
-        // cy.get("#name")
-        //     .type(newFriend.name)
-        //     .should("have.value", newFriend.name);
+        cy.get("#add-button").click();
 
-        // const hardinessLevelElement = `span[data-index=${
-        //     newFriend.hardiness
-        // }]`;
-        // cy.get(hardinessLevelElement).click();
+        cy.contains(newFriend.name);
+        cy.get("#status-snackbar").contains("Success");
 
-        // cy.get("#add-button").click();
-        // cy.contains(newFriend.name);
-
-        // cy.get("#status-snackbar").contains("Success");
-
-        // // It should be in a healthy state
-
-        // const newFriendPot = cy.get("div").contains(newFriend.name);
-
-        // newFriendPot
-        //     .should("have.css", "color")
-        //     .and("be.colored", "green");
+        // It should be in an unhealthy state
+        const newFriendPot = cy.get("div").contains(newFriend.name);
+        newFriendPot
+            .should("have.css", "color")
+            .and("be.colored", "red");
     });
 });
