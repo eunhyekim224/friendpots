@@ -17,7 +17,8 @@ export class FriendController {
                 const friend = new Friend(
                     friendId,
                     friendDTO.userId,
-                    friendDTO.name
+                    friendDTO.name,
+                    friendDTO.hardiness
                 );
 
                 const friends = new Friends();
@@ -62,4 +63,5 @@ export class FriendController {
 export type FriendDTO = {
     name: string;
     userId: string;
+    hardiness: string;
 };
