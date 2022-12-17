@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { Friend } from "./Friend";
+import { Friend, FriendState } from "./Friend";
 import { v4 } from "uuid";
 import { requestBody } from "../requestHandling/requestHandlers";
 import { Friends } from "./Friends";
@@ -14,11 +14,16 @@ export class FriendController {
                 const friendDTO = JSON.parse(requestData) as FriendDTO;
 
                 const friendId = v4();
+                const currentDate = new Date();
+                const currentState = FriendState.HEALTHY;
+
                 const friend = new Friend(
                     friendId,
                     friendDTO.userId,
                     friendDTO.name,
-                    friendDTO.hardiness
+                    friendDTO.hardiness,
+                    currentDate,
+                    currentState
                 );
 
                 const friends = new Friends();
