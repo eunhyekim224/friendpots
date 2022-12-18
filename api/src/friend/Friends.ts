@@ -1,4 +1,3 @@
-import path, { dirname } from "path";
 import { Store } from "../Store";
 import { Friend } from "./Friend";
 
