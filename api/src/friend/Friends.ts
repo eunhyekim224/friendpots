@@ -11,11 +11,53 @@ export class Friends {
         return this.store.write(friend);
     }
 
-    getById(id: string): Promise<Friend> {
-        return this.store.read(id);
+    async getById(id: string): Promise<Friend> {
+        const savedFriend = await this.store.read(id);
+
+        const friend = new Friend(
+            id,
+            savedFriend.userId,
+            savedFriend.name,
+            savedFriend.hardiness,
+            savedFriend.dateOfFullHealth,
+            savedFriend.state
+        );
+
+        const newState = friend.currentState();
+
+        return new Friend(
+            id,
+            savedFriend.userId,
+            savedFriend.name,
+            savedFriend.hardiness,
+            savedFriend.dateOfFullHealth,
+            newState
+        );
     }
 
-    getAllBy(userId: string): Promise<Friend[]> {
-        return this.store.readByUser(userId);
+    async getAllBy(userId: string): Promise<Friend[]> {
+        const savedFriends = await this.store.readByUser(userId);
+
+        return savedFriends.map(friend => {
+            const friendObj = new Friend(
+                friend.id,
+                friend.userId,
+                friend.name,
+                friend.hardiness,
+                friend.dateOfFullHealth,
+                friend.state
+            );
+
+            const newState = friendObj.currentState();
+
+            return new Friend(
+                friend.id,
+                friend.userId,
+                friend.name,
+                friend.hardiness,
+                friend.dateOfFullHealth,
+                newState
+            );
+        })
     }
 }

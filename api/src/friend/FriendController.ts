@@ -14,7 +14,7 @@ export class FriendController {
                 const friendDTO = JSON.parse(requestData) as FriendDTO;
 
                 const friendId = v4();
-                const currentDate = new Date();
+                const currentDate = new Date().toISOString();
                 const currentState = FriendState.HEALTHY;
 
                 const friend = new Friend(

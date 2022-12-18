@@ -11,7 +11,7 @@ export class Friend {
         userId: string,
         name: string,
         hardiness: string,
-        dateOfFullHealth: Date,
+        dateOfFullHealth: string,
         state: string
     ) {
         this.id = id;
@@ -22,8 +22,17 @@ export class Friend {
         this.state = state;
     }
 
-    get() {
-        
+    currentState(): FriendState {
+        const currentDate = new Date().valueOf();
+        const dateOfLastFullHealth = Date.parse(this.dateOfFullHealth);
+
+        const numberOfDaysPassed = Math.round((currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24));
+
+        if (numberOfDaysPassed >= Number(this.hardiness)) {
+            return FriendState.UNHEALTHY
+        } else {
+            return FriendState.HEALTHY
+        }
     }
 }
 
