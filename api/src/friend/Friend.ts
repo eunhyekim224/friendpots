@@ -26,7 +26,7 @@ export class Friend {
         const currentDate = new Date().valueOf();
         const dateOfLastFullHealth = Date.parse(this.dateOfFullHealth);
 
-        const numberOfDaysPassed = Math.round((currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24));
+        const numberOfDaysPassed = (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
 
         if (numberOfDaysPassed >= Number(this.hardiness)) {
             return FriendState.UNHEALTHY
