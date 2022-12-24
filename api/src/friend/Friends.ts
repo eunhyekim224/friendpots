@@ -2,7 +2,7 @@ import { Store } from "../Store";
 import { Friend } from "./Friend";
 
 export class Friends {
-    friendStorePath = __dirname + `/../../store/friends.json`;
+    friendStorePath = "C:/Users/kimeu/AppData/Local/FriendPots/friends.json";
 
     store = new Store<Friend>(this.friendStorePath);
 
