@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { FriendPotProps, FriendPotState } from "../Home.types";
 
-export const FriendPot = ({ id, name, state }: FriendPotProps): JSX.Element => {
+export const FriendPot = ({ id, name, state, hardiness }: FriendPotProps): JSX.Element => {
     const friendPotColor = () => {
         switch (state) {
             case FriendPotState.HEALTHY:
@@ -25,6 +25,17 @@ export const FriendPot = ({ id, name, state }: FriendPotProps): JSX.Element => {
                 role={"friend-name"}
             >
                 {name}
+            </Typography>
+            <Typography
+                variant="h6"
+                sx={{ color: friendPotColor() }}
+                component="div"
+                gutterBottom
+                fontFamily="Sue Ellen Francisco"
+                fontSize={30}
+                role={"friend-hardiness"}
+            >
+                {hardiness}
             </Typography>
         </Box>
     );

@@ -103,13 +103,14 @@ export const Home = (): ReactElement => {
         console.log("You've successfully logged out!");
     };
 
-    const friendpots = friends?.map((friend) => {
+    const friendPots = friends?.map((friend) => {
         return (
             <FriendPot
+                id={`friendpot-${friend.id}`}
                 name={friend.name}
                 state={friend.state}
+                hardiness={friend.hardiness}
                 key={friend.id}
-                id={`friendpot-${friend.id}`}
             />
         );
     });
@@ -177,7 +178,7 @@ export const Home = (): ReactElement => {
                         width: "60%",
                     }}
                 >
-                    {friendpots}
+                    {friendPots}
                 </Box>
                 <StatusSnackbar
                     isOpen={snackBarIsOpen}

@@ -16,6 +16,7 @@ export type FriendPotProps = {
     name: string;
     id: string;
     state?: FriendPotState;
+    hardiness: string;
     key?: string;
 };
 
