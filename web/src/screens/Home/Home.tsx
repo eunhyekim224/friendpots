@@ -176,6 +176,7 @@ export const Home = (): ReactElement => {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: "60%",
+                        paddingTop: "50px"
                     }}
                 >
                     {friendPots}
