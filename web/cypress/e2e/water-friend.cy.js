@@ -22,20 +22,22 @@ describe("Friend", () => {
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
-        const hardinessLevelElement = `span[data-index=${
-            newFriend.hardiness
-        }]`;
-        cy.get(hardinessLevelElement).first().click({force: true});
+        const hardinessLevelElement = `span[data-index=${newFriend.hardiness}]`;
+        cy.get(hardinessLevelElement).first().click({ force: true });
 
         cy.get("#add-button").click();
 
         cy.contains(newFriend.name);
         cy.get("#status-snackbar").contains("Success");
 
-        // It should be in an unhealthy state
+        // Then the friend pot should be in an unhealthy state
         const newFriendPot = cy.get("div").contains(newFriend.name);
-        newFriendPot
-            .should("have.css", "color")
-            .and("be.colored", "red");
+        newFriendPot.should("have.css", "color").and("be.colored", "red");
+
+        // When the user clicks on the button to water the friendpot
+        cy.get("#water-button").first().click();
+
+        // Then the friend pot should be re-set to healthy
+        newFriendPot.should("have.css", "color").and("be.colored", "green");
     });
 });

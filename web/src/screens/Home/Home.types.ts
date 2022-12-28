@@ -13,8 +13,9 @@ export type LoginDialogProps = {
 };
 
 export type FriendPotProps = {
-    name: string;
     id: string;
+    userId: string;
+    name: string;
     state?: FriendPotState;
     hardiness: string;
     key?: string;

@@ -1,7 +1,18 @@
-import { Box, Typography } from "@mui/material";
-import { FriendPotProps, FriendPotState } from "../Home.types";
+import { Box, Button, Typography } from "@mui/material";
+import axios from 'axios';
+import { useState } from 'react';
+import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
 
-export const FriendPot = ({ id, name, state, hardiness }: FriendPotProps): JSX.Element => {
+export const FriendPot = ({
+    id,
+    userId,
+    name,
+    state,
+    hardiness,
+}: FriendPotProps): JSX.Element => {
+
+    const [friendPot, setFriendPot] = useState({id, userId, name, state, hardiness});
+
     const friendPotColor = () => {
         switch (state) {
             case FriendPotState.HEALTHY:
@@ -12,6 +23,14 @@ export const FriendPot = ({ id, name, state, hardiness }: FriendPotProps): JSX.E
                 return "black";
         }
     };
+
+    const setFriendPotToHealthy = async () => {
+        const { data: friend } = await axios.post(`friends/${id}/water`);
+
+        console.log('here')
+
+        setFriendPot(friend);
+    }
 
     return (
         <Box id={id}>
@@ -24,7 +43,7 @@ export const FriendPot = ({ id, name, state, hardiness }: FriendPotProps): JSX.E
                 fontSize={50}
                 role={"friend-name"}
             >
-                {name}
+                {friendPot.name}
             </Typography>
             <Typography
                 variant="h6"
@@ -35,8 +54,9 @@ export const FriendPot = ({ id, name, state, hardiness }: FriendPotProps): JSX.E
                 fontSize={30}
                 role={"friend-hardiness"}
             >
-                {hardiness}
+                {friendPot.hardiness}
             </Typography>
+            <Button id="water-button" onClick={() => setFriendPotToHealthy()}>Water me!</Button>
         </Box>
     );
 };
