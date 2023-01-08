@@ -106,7 +106,7 @@ export const Home = (): ReactElement => {
     const friendPots = friends?.map((friend) => {
         return (
             <FriendPot
-                id={`friendpot-${friend.id}`}
+                id={friend.id || ''}
                 userId={userId}
                 name={friend.name}
                 state={friend.state}

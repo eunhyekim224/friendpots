@@ -14,8 +14,8 @@ export function handler(req: IncomingMessage, res: ServerResponse) {
 }
 
 const controller = (urlPathname: string) => {
-    const resources = urlPathname.split("/");
-    const mainResource = resources[1];
+    const paths = urlPathname.split("/");
+    const mainResource = paths[1];
 
     let controller;
 

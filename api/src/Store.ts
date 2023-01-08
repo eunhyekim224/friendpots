@@ -1,8 +1,8 @@
 import fs from "fs";
 
-type StorageItem = {
+interface StorageItem {
     id: string;
-    [key: string]: string | number | boolean;
+    userId?: string;
 };
 
 export class Store<T> {
@@ -25,6 +25,25 @@ export class Store<T> {
                     fs.writeFileSync(this.path, allItemsJson);
                 }
                 resolve(itemToStore);
+            });
+        });
+    }
+
+    update<T extends StorageItem>(itemToUpdate: T): Promise<T> {
+        return new Promise((resolve, reject) => {
+            fs.readFile(this.path, "utf8", (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const allItems: StorageItem[] = JSON.parse(data);
+                    const index = allItems.findIndex(
+                        (item) => item.id === (itemToUpdate.id)
+                    );
+                    allItems[index] = itemToUpdate as StorageItem;
+                    const allItemsJson = JSON.stringify(allItems);
+                    fs.writeFileSync(this.path, allItemsJson)
+                }
+                resolve(itemToUpdate);
             });
         });
     }

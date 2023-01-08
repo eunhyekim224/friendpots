@@ -7,32 +7,62 @@ import { Users } from "../user/Users";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
+        const parsedUrl = new URL(
+            req.url as string,
+            `http://${req.headers.host}`
+        );
+
         if (req.method === "POST") {
-            const requestData = await requestBody(req);
+            const action = parsedUrl.pathname.split("/")[3];
 
-            req.on("end", async () => {
-                const friendDTO = JSON.parse(requestData) as FriendDTO;
+            if (action) {
+                switch (action) {
+                    case "water":
+                        const friendId = parsedUrl.pathname.split("/")[2];
 
-                const friendId = v4();
-                const currentDate = new Date().toISOString();
-                const currentState = FriendState.HEALTHY;
+                        const friends = new Friends();
 
-                const friend = new Friend(
-                    friendId,
-                    friendDTO.userId,
-                    friendDTO.name,
-                    friendDTO.hardiness,
-                    currentDate,
-                    currentState
-                );
+                        if (friendId) {
+                            const friend = await friends.getById(friendId);
 
-                const friends = new Friends();
+                            await friend.water();
 
-                const savedFriend = await friends.save(friend);
+                            res.end(JSON.stringify(friend));
+                        }
+                        break;
+                    default:
+                        res.writeHead(404)
+                        res.end()
+                }
+            } else {
+                const requestData = await requestBody(req);
 
-                res.writeHead(201, { Location: `/friends/${friendId}` });
-                res.end(JSON.stringify(savedFriend));
-            });
+                req.on("end", async () => {
+                    const friendDTO = JSON.parse(requestData) as FriendDTO;
+
+                    const friendId = v4();
+                    const currentDate = new Date().toISOString();
+                    const currentState = FriendState.HEALTHY;
+
+                    const friend = new Friend(
+                        friendId,
+                        friendDTO.userId,
+                        friendDTO.name,
+                        friendDTO.hardiness,
+                        currentDate,
+                        currentState
+                    );
+
+                    const friends = new Friends();
+
+                    const savedFriend = await friends.save(friend);
+
+                    res.writeHead(201, {
+                        Location: `/friends/${friendId}`,
+                    });
+                    res.end(JSON.stringify(savedFriend));
+                });
+            }
         } else if (req.method === "GET") {
             const parsedUrl = new URL(
                 req.url as string,

@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
 
 export const FriendPot = ({
@@ -10,8 +10,13 @@ export const FriendPot = ({
     state,
     hardiness,
 }: FriendPotProps): JSX.Element => {
-
-    const [friendPot, setFriendPot] = useState({id, userId, name, state, hardiness});
+    const [friendPot, setFriendPot] = useState({
+        id,
+        userId,
+        name,
+        state,
+        hardiness,
+    });
 
     const friendPotColor = () => {
         switch (state) {
@@ -25,12 +30,14 @@ export const FriendPot = ({
     };
 
     const setFriendPotToHealthy = async () => {
-        const { data: friend } = await axios.post(`friends/${id}/water`);
+        try {
+            const { data: friend } = await axios.post(`friends/${id}/water`);
 
-        console.log('here')
-
-        setFriendPot(friend);
-    }
+            setFriendPot(friend);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <Box id={id}>
@@ -56,7 +63,15 @@ export const FriendPot = ({
             >
                 {friendPot.hardiness}
             </Typography>
-            <Button id="water-button" onClick={() => setFriendPotToHealthy()}>Water me!</Button>
+
+            {state === FriendPotState.UNHEALTHY && (
+                <Button
+                    id="water-button"
+                    onClick={() => setFriendPotToHealthy()}
+                >
+                    Water me!
+                </Button>
+            )}
         </Box>
     );
 };

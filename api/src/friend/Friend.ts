@@ -1,3 +1,5 @@
+import { Friends } from "./Friends";
+
 export class Friend {
     id;
     userId;
@@ -26,13 +28,23 @@ export class Friend {
         const currentDate = new Date().valueOf();
         const dateOfLastFullHealth = Date.parse(this.dateOfFullHealth);
 
-        const numberOfDaysPassed = (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
+        const numberOfDaysPassed =
+            (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
 
         if (numberOfDaysPassed >= Number(this.hardiness)) {
-            return FriendState.UNHEALTHY
+            return FriendState.UNHEALTHY;
         } else {
-            return FriendState.HEALTHY
+            return FriendState.HEALTHY;
         }
+    }
+
+    async water(): Promise<void> {
+        this.state = FriendState.HEALTHY;
+
+        const friends = new Friends();
+        const currentDate = new Date().toISOString();
+
+        await friends.update({ ...this, dateOfFullHealth: currentDate });
     }
 }
 

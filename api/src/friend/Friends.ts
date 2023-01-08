@@ -10,6 +10,10 @@ export class Friends {
         return this.store.write(friend);
     }
 
+    update(friend:Friend): Promise<Friend> {
+        return this.store.update(friend);
+    }
+
     async getById(id: string): Promise<Friend> {
         const savedFriend = await this.store.read(id);
 
@@ -19,7 +23,7 @@ export class Friends {
             savedFriend.name,
             savedFriend.hardiness,
             savedFriend.dateOfFullHealth,
-            savedFriend.state
+            savedFriend.state,
         );
 
         const newState = friend.currentState();
