@@ -26,7 +26,7 @@ export class Friends {
             savedFriend.state,
         );
 
-        const newState = friend.currentState();
+        const newState = await friend.currentState();
 
         return new Friend(
             id,
@@ -41,7 +41,7 @@ export class Friends {
     async getAllBy(userId: string): Promise<Friend[]> {
         const savedFriends = await this.store.readByUser(userId);
 
-        return savedFriends.map(friend => {
+        const savedFriendsPromises = savedFriends.map(async friend => {
             const friendObj = new Friend(
                 friend.id,
                 friend.userId,
@@ -51,7 +51,7 @@ export class Friends {
                 friend.state
             );
 
-            const newState = friendObj.currentState();
+            const newState = await friendObj.currentState();
 
             return new Friend(
                 friend.id,
@@ -59,8 +59,10 @@ export class Friends {
                 friend.name,
                 friend.hardiness,
                 friend.dateOfFullHealth,
-                newState
+                newState,
             );
         })
+
+        return await Promise.all(savedFriendsPromises);
     }
 }

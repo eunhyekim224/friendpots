@@ -24,7 +24,7 @@ export class Friend {
         this.state = state;
     }
 
-    currentState(): FriendState {
+    async currentState(): Promise<FriendState> {
         const currentDate = new Date().valueOf();
         const dateOfLastFullHealth = Date.parse(this.dateOfFullHealth);
 
@@ -32,6 +32,8 @@ export class Friend {
             (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
 
         if (numberOfDaysPassed >= Number(this.hardiness)) {
+            const friends = new Friends();
+            await friends.update({ ...this, state: FriendState.UNHEALTHY });
             return FriendState.UNHEALTHY;
         } else {
             return FriendState.HEALTHY;

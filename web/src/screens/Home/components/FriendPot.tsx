@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
 
 export const FriendPot = ({
@@ -32,12 +32,17 @@ export const FriendPot = ({
     const setFriendPotToHealthy = async () => {
         try {
             const { data: friend } = await axios.post(`friends/${id}/water`);
-
+            console.log(friend);
             setFriendPot(friend);
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        //
+    }, [friendPot]);
 
     return (
         <Box id={id}>
