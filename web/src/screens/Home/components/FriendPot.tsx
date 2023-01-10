@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
 
 export const FriendPot = ({
@@ -33,8 +33,13 @@ export const FriendPot = ({
         try {
             const { data: friend } = await axios.post(`friends/${id}/water`);
             console.log(friend);
-            setFriendPot(friend);
-            window.location.reload();
+            setFriendPot({
+                id: friend.id,
+                userId: friend.userId,
+                name: friend.name,
+                state: friend.state,
+                hardiness: friend.hardiness
+            });
         } catch (error) {
             console.log(error);
         }
@@ -42,6 +47,8 @@ export const FriendPot = ({
 
     useEffect(() => {
         //
+        console.log('re-rendered')
+        setFriendPot(friendPot)
     }, [friendPot]);
 
     return (
@@ -70,10 +77,7 @@ export const FriendPot = ({
             </Typography>
 
             {state === FriendPotState.UNHEALTHY && (
-                <Button
-                    id="water-button"
-                    onClick={() => setFriendPotToHealthy()}
-                >
+                <Button id="water-button" onClick={setFriendPotToHealthy}>
                     Water me!
                 </Button>
             )}

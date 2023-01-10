@@ -17,10 +17,18 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint", "unused-imports", "cypress"],
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "unused-imports",
+        "cypress",
+        "react-hooks"
+    ],
     "rules": {
         "react/react-in-jsx-scope": "off",
         "no-unused-vars": "off",
-        "no-empty-function": "off"
+        "no-empty-function": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }
