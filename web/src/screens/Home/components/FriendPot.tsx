@@ -10,16 +10,17 @@ export const FriendPot = ({
     state,
     hardiness,
 }: FriendPotProps): JSX.Element => {
-    const [friendPot, setFriendPot] = useState({
+    const friend = {
         id,
         userId,
         name,
         state,
         hardiness,
-    });
+    };
+    const [friendPot, setFriendPot] = useState(friend);
 
     const friendPotColor = () => {
-        switch (state) {
+        switch (friendPot.state) {
             case FriendPotState.HEALTHY:
                 return "green";
             case FriendPotState.UNHEALTHY:
@@ -31,25 +32,12 @@ export const FriendPot = ({
 
     const setFriendPotToHealthy = async () => {
         try {
-            const { data: friend } = await axios.post(`friends/${id}/water`);
-            console.log(friend);
-            setFriendPot({
-                id: friend.id,
-                userId: friend.userId,
-                name: friend.name,
-                state: friend.state,
-                hardiness: friend.hardiness
-            });
+            const { data: wateredFriend } = await axios.post(`friends/${id}/water`);
+            setFriendPot(wateredFriend);
         } catch (error) {
             console.log(error);
         }
     };
-
-    useEffect(() => {
-        //
-        console.log('re-rendered')
-        setFriendPot(friendPot)
-    }, [friendPot]);
 
     return (
         <Box id={id}>
@@ -76,7 +64,7 @@ export const FriendPot = ({
                 {friendPot.hardiness}
             </Typography>
 
-            {state === FriendPotState.UNHEALTHY && (
+            {friendPot.state === FriendPotState.UNHEALTHY && (
                 <Button id="water-button" onClick={setFriendPotToHealthy}>
                     Water me!
                 </Button>
