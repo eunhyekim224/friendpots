@@ -35,9 +35,13 @@ describe("Friend", () => {
         newFriendPot.should("have.css", "color").and("be.colored", "red");
 
         // When the user clicks on the button to water the friendpot
-        cy.get("#water-button").first().click();
+        const waterButton = cy.get("#water-button").first();
+        waterButton.click();
 
         // Then the friend pot should be re-set to healthy
-        newFriendPot.should("have.css", "color").and("be.colored", "green");
+        const wateredFriendPot = cy.get("div").contains(newFriend.name);
+        wateredFriendPot
+            .should("have.css", "color")
+            .and("be.colored", "green");
     });
 });
