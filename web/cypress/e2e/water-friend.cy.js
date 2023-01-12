@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 import chaiColors from "chai-colors";
 chai.use(chaiColors);
 
-describe("Friend", () => {
-    it("can have different states", () => {
+describe("FriendPot", () => {
+    it("can be watered back to health", () => {
         // Given a user and a friendpot that is in UNHEALTHY state
         const testUserId = `${uuidv4()}@friendpots.com`;
         const newFriend = {
@@ -35,8 +35,7 @@ describe("Friend", () => {
         newFriendPot.should("have.css", "color").and("be.colored", "red");
 
         // When the user clicks on the button to water the friendpot
-        const waterButton = cy.get("#water-button").first();
-        waterButton.click();
+        cy.get("#water-button").first().click();
 
         // Then the friend pot should be re-set to healthy
         const wateredFriendPot = cy.get("div").contains(newFriend.name);
