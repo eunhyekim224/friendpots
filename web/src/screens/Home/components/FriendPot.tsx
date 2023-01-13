@@ -1,4 +1,6 @@
+import { Close } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
+import { border } from "@mui/system";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
@@ -32,7 +34,9 @@ export const FriendPot = ({
 
     const setFriendPotToHealthy = async () => {
         try {
-            const { data: wateredFriend } = await axios.post(`friends/${id}/water`);
+            const { data: wateredFriend } = await axios.post(
+                `friends/${id}/water`
+            );
             setFriendPot(wateredFriend);
         } catch (error) {
             console.log(error);
@@ -40,7 +44,25 @@ export const FriendPot = ({
     };
 
     return (
-        <Box id={id}>
+        <Box
+            id={id}
+            sx={{
+                borderWidth: '3px',
+                borderColor: friendPotColor(),
+            }}
+        >
+            <Button
+                sx={{
+                    marginLeft: "100px",
+                }}
+            >
+                <Close
+                    sx={{
+                        color: friendPotColor(),
+                    }}
+                ></Close>
+            </Button>
+
             <Typography
                 variant="h5"
                 sx={{ color: friendPotColor() }}
@@ -52,7 +74,7 @@ export const FriendPot = ({
             >
                 {friendPot.name}
             </Typography>
-            <Typography
+            {/* <Typography
                 variant="h6"
                 sx={{ color: friendPotColor() }}
                 component="div"
@@ -62,7 +84,7 @@ export const FriendPot = ({
                 role={"friend-hardiness"}
             >
                 {friendPot.hardiness}
-            </Typography>
+            </Typography> */}
 
             {friendPot.state === FriendPotState.UNHEALTHY && (
                 <Button id="water-button" onClick={setFriendPotToHealthy}>
