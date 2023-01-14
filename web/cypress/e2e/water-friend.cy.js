@@ -32,15 +32,18 @@ describe("FriendPot", () => {
 
         // Then the friend pot should be in an unhealthy state
         const newFriendPot = cy.get("div").contains(newFriend.name);
-        newFriendPot.should("have.css", "color").and("be.colored", "red");
+        newFriendPot.should("contain", "🥀");
+
+        // Close success snackbar  
+        cy.get(".css-1e0d89p-MuiButtonBase-root-MuiIconButton-root").click();
 
         // When the user clicks on the button to water the friendpot
         cy.get("#water-button").first().click();
 
+        cy.wait(500);
+
         // Then the friend pot should be re-set to healthy
         const wateredFriendPot = cy.get("div").contains(newFriend.name);
-        wateredFriendPot
-            .should("have.css", "color")
-            .and("be.colored", "green");
+        wateredFriendPot.should("contain", "🪴");
     });
 });

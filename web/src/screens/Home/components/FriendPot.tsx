@@ -21,17 +21,6 @@ export const FriendPot = ({
     };
     const [friendPot, setFriendPot] = useState(friend);
 
-    const friendPotColor = () => {
-        switch (friendPot.state) {
-            case FriendPotState.HEALTHY:
-                return "green";
-            case FriendPotState.UNHEALTHY:
-                return "red";
-            default:
-                return "black";
-        }
-    };
-
     const setFriendPotToHealthy = async () => {
         try {
             const { data: wateredFriend } = await axios.post(
@@ -72,7 +61,7 @@ export const FriendPot = ({
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"
                 fontSize={50}
-                role={"friend-name"}
+                role={"friend-label"}
             >
                 {friendPot.name}
                 {friendPot.state === FriendPotState.HEALTHY ? "🪴" : "🥀"}
