@@ -47,8 +47,10 @@ export const FriendPot = ({
         <Box
             id={id}
             sx={{
-                borderWidth: '3px',
-                borderColor: friendPotColor(),
+                border: `solid 1px #804545`,
+                borderRadius: "50px",
+                padding: "10px",
+                textAlign: "center",
             }}
         >
             <Button
@@ -58,14 +60,14 @@ export const FriendPot = ({
             >
                 <Close
                     sx={{
-                        color: friendPotColor(),
+                        color: "#804545",
                     }}
                 ></Close>
             </Button>
 
             <Typography
                 variant="h5"
-                sx={{ color: friendPotColor() }}
+                sx={{ color: 'green' }}
                 component="div"
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"
@@ -73,22 +75,14 @@ export const FriendPot = ({
                 role={"friend-name"}
             >
                 {friendPot.name}
+                {friendPot.state === FriendPotState.HEALTHY ? "🪴" : "🥀"}
             </Typography>
-            {/* <Typography
-                variant="h6"
-                sx={{ color: friendPotColor() }}
-                component="div"
-                gutterBottom
-                fontFamily="Sue Ellen Francisco"
-                fontSize={30}
-                role={"friend-hardiness"}
-            >
-                {friendPot.hardiness}
-            </Typography> */}
 
             {friendPot.state === FriendPotState.UNHEALTHY && (
                 <Button id="water-button" onClick={setFriendPotToHealthy}>
-                    Water me!
+                    <Typography fontSize={20} fontFamily="Sue Ellen Francisco">
+                        Needs water 💧
+                    </Typography>
                 </Button>
             )}
         </Box>
