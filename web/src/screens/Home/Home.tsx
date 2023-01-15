@@ -177,7 +177,7 @@ export const Home = (): ReactElement => {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: "60%",
-                        marginTop: "50px",
+                        margin: "50px",
                         gap: '15px'
                     }}
                 >

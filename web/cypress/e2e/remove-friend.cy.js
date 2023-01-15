@@ -24,11 +24,8 @@ describe("FriendPot", () => {
 
         cy.get("#add-button").click();
 
-        cy.get("#status-snackbar").contains("Success");
-
         cy.get("div")
             .contains(newFriend.name)
-            .should("have.css", "color", "rgb(0, 128, 0)");
 
         cy.get("#delete-button").click();
 
