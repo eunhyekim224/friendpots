@@ -63,6 +63,7 @@ export const FriendPot = ({
                     marginLeft: "100px",
                 }}
                 onClick={archiveFriend}
+                id={"delete-button"}
             >
                 <Close
                     sx={{
