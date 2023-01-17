@@ -19,6 +19,7 @@ export type FriendPotProps = {
     state?: FriendPotState;
     hardiness: string;
     key?: string;
+    getFriends: (userId: string) => Promise<void>
 };
 
 export enum FriendPotState {

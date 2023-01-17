@@ -7,6 +7,7 @@ export class Friend {
     hardiness;
     dateOfFullHealth;
     state;
+    archived;
 
     constructor(
         id: string,
@@ -14,7 +15,8 @@ export class Friend {
         name: string,
         hardiness: string,
         dateOfFullHealth: string,
-        state: string
+        state: string,
+        archived?: boolean
     ) {
         this.id = id;
         this.userId = userId;
@@ -22,6 +24,7 @@ export class Friend {
         this.hardiness = hardiness;
         this.dateOfFullHealth = dateOfFullHealth;
         this.state = state;
+        this.archived = archived
     }
 
     async currentState(): Promise<FriendState> {
@@ -41,12 +44,19 @@ export class Friend {
     }
 
     async water(): Promise<void> {
-        this.state = FriendState.HEALTHY;
-
         const friends = new Friends();
-        const currentDate = new Date().toISOString();
 
-        await friends.update({ ...this, dateOfFullHealth: currentDate });
+        await friends.update({
+            ...this,
+            state: FriendState.HEALTHY,
+            dateOfFullHealth: new Date().toISOString,
+        });
+    }
+
+    async archive(): Promise<void> {
+        const friends = new Friends();
+
+        await friends.update({ ...this, archived: true });
     }
 }
 

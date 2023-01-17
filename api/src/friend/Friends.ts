@@ -10,11 +10,11 @@ export class Friends {
         return this.store.write(friend);
     }
 
-    update(friend:Friend): Promise<Friend> {
+    update(friend: Friend): Promise<Friend> {
         return this.store.update(friend);
     }
 
-    async getById(id: string): Promise<Friend> {
+    async getBy(id: string): Promise<Friend> {
         const savedFriend = await this.store.read(id);
 
         const friend = new Friend(
@@ -23,7 +23,7 @@ export class Friends {
             savedFriend.name,
             savedFriend.hardiness,
             savedFriend.dateOfFullHealth,
-            savedFriend.state,
+            savedFriend.state
         );
 
         const newState = await friend.currentState();
@@ -41,14 +41,19 @@ export class Friends {
     async getAllBy(userId: string): Promise<Friend[]> {
         const savedFriends = await this.store.readByUser(userId);
 
-        const savedFriendsPromises = savedFriends.map(async friend => {
+        const unarchivedFriends = savedFriends.filter((friend) => {
+            return !friend.archived;
+        });
+
+        const friendsPromises = unarchivedFriends.map(async (friend) => {
             const friendObj = new Friend(
                 friend.id,
                 friend.userId,
                 friend.name,
                 friend.hardiness,
                 friend.dateOfFullHealth,
-                friend.state
+                friend.state,
+                friend.archived
             );
 
             const newState = await friendObj.currentState();
@@ -60,9 +65,10 @@ export class Friends {
                 friend.hardiness,
                 friend.dateOfFullHealth,
                 newState,
+                friend.archived
             );
-        })
+        });
 
-        return await Promise.all(savedFriendsPromises);
+        return await Promise.all(friendsPromises);
     }
 }

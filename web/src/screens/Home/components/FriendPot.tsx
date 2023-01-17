@@ -1,8 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { border } from "@mui/system";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
 
 export const FriendPot = ({
@@ -11,6 +10,7 @@ export const FriendPot = ({
     name,
     state,
     hardiness,
+    getFriends,
 }: FriendPotProps): JSX.Element => {
     const friend = {
         id,
@@ -19,7 +19,7 @@ export const FriendPot = ({
         state,
         hardiness,
     };
-    const [friendPot, setFriendPot] = useState(friend);
+    const [friendPot, setFriendPot] = useState<Friend | undefined>(friend);
 
     const setFriendPotToHealthy = async () => {
         try {
@@ -27,6 +27,22 @@ export const FriendPot = ({
                 `friends/${id}/water`
             );
             setFriendPot(wateredFriend);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const archiveFriend = async () => {
+        try {
+            //@TODO: add a confirmation modal
+            const canProceed = confirm(
+                "You will not be able to undo this action. Are you sure you want to proceed?"
+            );
+            if (canProceed) {
+                await axios.post(`friends/${id}/archive`);
+
+                await getFriends(userId);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -46,6 +62,7 @@ export const FriendPot = ({
                 sx={{
                     marginLeft: "100px",
                 }}
+                onClick={archiveFriend}
             >
                 <Close
                     sx={{
@@ -56,18 +73,18 @@ export const FriendPot = ({
 
             <Typography
                 variant="h5"
-                sx={{ color: 'green' }}
+                sx={{ color: "green" }}
                 component="div"
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"
                 fontSize={50}
                 role={"friend-label"}
             >
-                {friendPot.name}
-                {friendPot.state === FriendPotState.HEALTHY ? "🪴" : "🥀"}
+                {friendPot?.name}
+                {friendPot?.state === FriendPotState.HEALTHY ? "🪴" : "🥀"}
             </Typography>
 
-            {friendPot.state === FriendPotState.UNHEALTHY && (
+            {friendPot?.state === FriendPotState.UNHEALTHY && (
                 <Button id="water-button" onClick={setFriendPotToHealthy}>
                     <Typography fontSize={20} fontFamily="Sue Ellen Francisco">
                         Needs water 💧

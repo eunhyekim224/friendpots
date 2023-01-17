@@ -64,12 +64,12 @@ export const Home = (): ReactElement => {
         [friends]
     );
 
-    const userIdFromLocal = () => {
+    const userIdFromLocal = async () => {
         const userId = JSON.parse(localStorage.getItem("userId") as string);
         console.log("userId from storage", userId);
         if (userId) {
             setUserId(userId);
-            getFriends(userId);
+            await getFriends(userId);
         }
     };
 
@@ -112,6 +112,7 @@ export const Home = (): ReactElement => {
                 state={friend.state}
                 hardiness={friend.hardiness}
                 key={friend.id}
+                getFriends={getFriends}
             />
         );
     });

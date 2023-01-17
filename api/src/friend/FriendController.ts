@@ -16,23 +16,32 @@ export class FriendController {
             const action = parsedUrl.pathname.split("/")[3];
 
             if (action) {
+                const friendId = parsedUrl.pathname.split("/")[2];
+                const friends = new Friends();
+
                 switch (action) {
                     case "water":
-                        const friendId = parsedUrl.pathname.split("/")[2];
-
-                        const friends = new Friends();
-
                         if (friendId) {
-                            const friend = await friends.getById(friendId);
+                            const friend = await friends.getBy(friendId);
 
                             await friend.water();
 
                             res.end(JSON.stringify(friend));
                         }
                         break;
+                    case "archive":
+                        if (friendId) {
+                            const friend = await friends.getBy(friendId);
+
+                            await friend.archive();
+
+                            res.writeHead(200);
+                            res.end();
+                        }
+                        break;
                     default:
-                        res.writeHead(404)
-                        res.end()
+                        res.writeHead(404);
+                        res.end();
                 }
             } else {
                 const requestData = await requestBody(req);
@@ -50,7 +59,7 @@ export class FriendController {
                         friendDTO.name,
                         friendDTO.hardiness,
                         currentDate,
-                        currentState
+                        currentState,
                     );
 
                     const friends = new Friends();
@@ -80,7 +89,7 @@ export class FriendController {
             }
 
             if (friendId) {
-                friendData = await friends.getById(friendId);
+                friendData = await friends.getBy(friendId);
             }
 
             if (friendData) {
