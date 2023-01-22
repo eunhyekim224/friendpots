@@ -24,7 +24,7 @@ export class Friend {
         this.hardiness = hardiness;
         this.dateOfFullHealth = dateOfFullHealth;
         this.state = state;
-        this.archived = archived
+        this.archived = archived;
     }
 
     async currentState(): Promise<FriendState> {
@@ -44,12 +44,13 @@ export class Friend {
     }
 
     async water(): Promise<void> {
+        this.state = FriendState.HEALTHY;
+        this.dateOfFullHealth = new Date().toISOString();
+
         const friends = new Friends();
 
         await friends.update({
             ...this,
-            state: FriendState.HEALTHY,
-            dateOfFullHealth: new Date().toISOString(),
         });
     }
 
