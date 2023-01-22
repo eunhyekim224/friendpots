@@ -49,7 +49,7 @@ export class Friend {
         await friends.update({
             ...this,
             state: FriendState.HEALTHY,
-            dateOfFullHealth: new Date().toISOString,
+            dateOfFullHealth: new Date().toISOString(),
         });
     }
 
