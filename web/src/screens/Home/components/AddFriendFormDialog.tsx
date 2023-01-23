@@ -7,6 +7,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { useState } from "react";
 
 type AddFriendFormDialogProps = {
@@ -34,9 +35,7 @@ export const AddFriendFormDialog = (
         setName(event.target.value.trim());
     };
 
-    const handleHardinessChange = (
-        event: Event, value: number | number[]
-    ) => {
+    const handleCareLevel = (event: Event, value: number | number[]) => {
         setHardiness(value.toString().trim());
     };
 
@@ -56,8 +55,8 @@ export const AddFriendFormDialog = (
     };
 
     const hardinessSliderValueText = (value: number) => {
-        return `${value} hardiness`
-    }
+        return `${value} hardiness`;
+    };
 
     return (
         <Dialog
@@ -81,24 +80,12 @@ export const AddFriendFormDialog = (
                 />
             </DialogContent>
             <DialogContent>
-                <Typography>Hardiness</Typography>
-                <Slider
-                    aria-label="Hardiness"
-                    getAriaValueText={hardinessSliderValueText}
-                    id="hardiness-slider"
-                    color="secondary"
-                    defaultValue={0}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks
-                    min={0}
-                    max={10}
-                    sx={{
-                        width: "350px",
-                        color: "green",
-                    }}
-                    onChange={handleHardinessChange}
-                />
+                <Typography>Care level</Typography>
+                <Box>
+                    <Button id="care-level-button-low" onClick={() => handleCareLevel('low')}></Button>
+                    <Button id="care-level-button-medium" onClick={() => handleCareLevel('medium')}></Button>
+                    <Button id="care-level-button-high" onClick={() => handleCareLevel('high')}></Button>
+                </Box>
             </DialogContent>
             <DialogActions>
                 <Button
