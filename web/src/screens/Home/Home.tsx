@@ -19,11 +19,11 @@ export const Home = (): ReactElement => {
 
     const successMsg = "You have successfully added your new friend pot! 🎉";
 
-    const addFriend = async (name: string, hardiness: string) => {
+    const addFriend = async (name: string, careLevel: string) => {
         const newFriend: Friend = {
             userId,
             name,
-            hardiness,
+            careLevel,
         };
 
         try {
@@ -110,7 +110,7 @@ export const Home = (): ReactElement => {
                 userId={userId}
                 name={friend.name}
                 state={friend.state}
-                hardiness={friend.hardiness}
+                careLevel={friend.careLevel}
                 key={friend.id}
                 getFriends={getFriends}
             />

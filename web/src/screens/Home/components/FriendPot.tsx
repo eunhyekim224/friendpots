@@ -9,7 +9,7 @@ export const FriendPot = ({
     userId,
     name,
     state,
-    hardiness,
+    careLevel,
     getFriends,
 }: FriendPotProps): JSX.Element => {
     const friend = {
@@ -17,7 +17,7 @@ export const FriendPot = ({
         userId,
         name,
         state,
-        hardiness,
+        careLevel,
     };
     const [friendPot, setFriendPot] = useState<Friend | undefined>(friend);
 

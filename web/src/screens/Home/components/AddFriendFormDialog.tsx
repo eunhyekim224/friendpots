@@ -3,6 +3,11 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
     Slider,
     TextField,
     Typography,
@@ -35,7 +40,10 @@ export const AddFriendFormDialog = (
         setName(event.target.value.trim());
     };
 
-    const handleCareLevel = (value: string) => {
+    const handleCareLevel = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        value: string
+    ) => {
         setCareLevel(value.trim());
     };
 
@@ -75,29 +83,74 @@ export const AddFriendFormDialog = (
                 />
             </DialogContent>
             <DialogContent>
-                <Typography>Care level</Typography>
                 <Box>
-                    <Button
-                        id="care-level-button-low"
-                        sx={{ color: "green" }}
-                        onClick={() => handleCareLevel("low")}
-                    >
-                        Low
-                    </Button>
-                    <Button
-                        id="care-level-button-medium"
-                        sx={{ color: "green" }}
-                        onClick={() => handleCareLevel("medium")}
-                    >
-                        Medium
-                    </Button>
-                    <Button
-                        id="care-level-button-high"
-                        sx={{ color: "green" }}
-                        onClick={() => handleCareLevel("high")}
-                    >
-                        High
-                    </Button>
+                    <FormControl>
+                        <FormLabel id="care-level-radio-buttons-group">
+                            Care Level
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby="care-level-radio-buttons0group"
+                            name="care-level-radio-buttons-group"
+                            value={careLevel}
+                            onChange={handleCareLevel}
+                            row
+                            sx={{
+                                color: "green",
+                                "&.Mui-focused": {
+                                    color: "green",
+                                },
+                            }}
+                        >
+                            <FormControlLabel
+                                value="low"
+                                control={
+                                    <Radio
+                                        sx={{
+                                            color: "green",
+                                            "&.Mui-checked": {
+                                                color: "green",
+                                            },
+                                        }}
+                                    />
+                                }
+                                label="Low"
+                                sx={{
+                                    color: "green",
+                                    "&.Mui-checked": {
+                                        color: "green",
+                                    },
+                                }}
+                            />
+                            <FormControlLabel
+                                value="medium"
+                                control={
+                                    <Radio
+                                        sx={{
+                                            color: "green",
+                                            "&.Mui-checked": {
+                                                color: "green",
+                                            },
+                                        }}
+                                    />
+                                }
+                                label="Medium"
+                            />
+                            <FormControlLabel
+                                value="high"
+                                control={
+                                    <Radio
+                                        sx={{
+                                            color: "green",
+                                            "&.Mui-checked": {
+                                                color: "green",
+                                            },
+                                        }}
+                                    />
+                                }
+                                label="high"
+                            />
+                        </RadioGroup>
+                    </FormControl>
                 </Box>
             </DialogContent>
             <DialogActions>

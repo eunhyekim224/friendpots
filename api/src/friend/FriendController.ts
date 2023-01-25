@@ -57,7 +57,7 @@ export class FriendController {
                         friendId,
                         friendDTO.userId,
                         friendDTO.name,
-                        friendDTO.hardiness,
+                        friendDTO.careLevel,
                         currentDate,
                         currentState,
                     );
@@ -107,5 +107,5 @@ export class FriendController {
 export type FriendDTO = {
     name: string;
     userId: string;
-    hardiness: string;
+    careLevel: string;
 };

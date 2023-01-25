@@ -4,7 +4,7 @@ export class Friend {
     id;
     userId;
     name;
-    hardiness;
+    careLevel;
     dateOfFullHealth;
     state;
     archived;
@@ -13,7 +13,7 @@ export class Friend {
         id: string,
         userId: string,
         name: string,
-        hardiness: string,
+        careLevel: string,
         dateOfFullHealth: string,
         state: string,
         archived?: boolean
@@ -21,10 +21,23 @@ export class Friend {
         this.id = id;
         this.userId = userId;
         this.name = name;
-        this.hardiness = hardiness;
+        this.careLevel = careLevel;
         this.dateOfFullHealth = dateOfFullHealth;
         this.state = state;
         this.archived = archived;
+    }
+
+    waterFrequencyInDays(): number {
+        switch(this.careLevel) {
+            case 'low': 
+                return 7;
+            case 'medium':
+                return 14;
+            case 'high': 
+                return 21;
+            default:
+                return 21;
+        }
     }
 
     async currentState(): Promise<FriendState> {
@@ -34,7 +47,7 @@ export class Friend {
         const numberOfDaysPassed =
             (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
 
-        if (numberOfDaysPassed >= Number(this.hardiness)) {
+        if (numberOfDaysPassed >= this.waterFrequencyInDays()) {
             const friends = new Friends();
             await friends.update({ ...this, state: FriendState.UNHEALTHY });
             return FriendState.UNHEALTHY;

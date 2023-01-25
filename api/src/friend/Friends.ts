@@ -21,7 +21,7 @@ export class Friends {
             id,
             savedFriend.userId,
             savedFriend.name,
-            savedFriend.hardiness,
+            savedFriend.careLevel,
             savedFriend.dateOfFullHealth,
             savedFriend.state
         );
@@ -32,7 +32,7 @@ export class Friends {
             id,
             savedFriend.userId,
             savedFriend.name,
-            savedFriend.hardiness,
+            savedFriend.careLevel,
             savedFriend.dateOfFullHealth,
             newState
         );
@@ -50,7 +50,7 @@ export class Friends {
                 friend.id,
                 friend.userId,
                 friend.name,
-                friend.hardiness,
+                friend.careLevel,
                 friend.dateOfFullHealth,
                 friend.state,
                 friend.archived
@@ -62,7 +62,7 @@ export class Friends {
                 friend.id,
                 friend.userId,
                 friend.name,
-                friend.hardiness,
+                friend.careLevel,
                 friend.dateOfFullHealth,
                 newState,
                 friend.archived

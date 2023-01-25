@@ -2,7 +2,7 @@ export type Friend = {
     id?: string;
     userId: string;
     name: string;
-    hardiness: string;
+    careLevel: string;
     state?: FriendPotState;
 };
 
@@ -17,7 +17,7 @@ export type FriendPotProps = {
     userId: string;
     name: string;
     state?: FriendPotState;
-    hardiness: string;
+    careLevel: string;
     key?: string;
     getFriends: (userId: string) => Promise<void>
 };
