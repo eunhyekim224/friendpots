@@ -20,23 +20,23 @@ export const AddFriendFormDialog = (
     props: AddFriendFormDialogProps
 ): JSX.Element => {
     const [name, setName] = useState<string>("");
-    const [hardiness, setHardiness] = useState<string>("");
+    const [careLevel, setCareLevel] = useState<string>("");
 
     const formIsComplete = () => {
-        return name && hardiness;
+        return name && careLevel;
     };
 
     const clearForm = () => {
         setName("");
-        setHardiness("");
+        setCareLevel("");
     };
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value.trim());
     };
 
-    const handleCareLevel = (event: Event, value: number | number[]) => {
-        setHardiness(value.toString().trim());
+    const handleCareLevel = (value: string) => {
+        setCareLevel(value.trim());
     };
 
     const handleKeyPress = async (event: React.KeyboardEvent) => {
@@ -47,15 +47,11 @@ export const AddFriendFormDialog = (
 
     const handleAddFriend = async () => {
         if (formIsComplete()) {
-            await props.addFriend(name, hardiness);
+            await props.addFriend(name, careLevel);
             clearForm();
         } else {
             console.log("form is not complete");
         }
-    };
-
-    const hardinessSliderValueText = (value: number) => {
-        return `${value} hardiness`;
     };
 
     return (
@@ -72,7 +68,6 @@ export const AddFriendFormDialog = (
                     label="Name"
                     type="text"
                     variant="standard"
-                    // color="success"
                     required={true}
                     onChange={handleNameChange}
                     onKeyDown={handleKeyPress}
@@ -82,9 +77,27 @@ export const AddFriendFormDialog = (
             <DialogContent>
                 <Typography>Care level</Typography>
                 <Box>
-                    <Button id="care-level-button-low" onClick={() => handleCareLevel('low')}></Button>
-                    <Button id="care-level-button-medium" onClick={() => handleCareLevel('medium')}></Button>
-                    <Button id="care-level-button-high" onClick={() => handleCareLevel('high')}></Button>
+                    <Button
+                        id="care-level-button-low"
+                        sx={{ color: "green" }}
+                        onClick={() => handleCareLevel("low")}
+                    >
+                        Low
+                    </Button>
+                    <Button
+                        id="care-level-button-medium"
+                        sx={{ color: "green" }}
+                        onClick={() => handleCareLevel("medium")}
+                    >
+                        Medium
+                    </Button>
+                    <Button
+                        id="care-level-button-high"
+                        sx={{ color: "green" }}
+                        onClick={() => handleCareLevel("high")}
+                    >
+                        High
+                    </Button>
                 </Box>
             </DialogContent>
             <DialogActions>
