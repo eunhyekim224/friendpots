@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { AddFriendButton, LogoutButton } from "./Home.styled";
 import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
@@ -10,6 +10,8 @@ import { LoginDialog } from "./components/LoginDialog";
 import { Friend } from "./Home.types";
 
 export const Home = (): ReactElement => {
+    const { palette } = useTheme();
+
     const [userId, setUserId] = useState("");
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -106,7 +108,7 @@ export const Home = (): ReactElement => {
     const friendPots = friends?.map((friend) => {
         return (
             <FriendPot
-                id={friend.id || ''}
+                id={friend.id || ""}
                 userId={userId}
                 name={friend.name}
                 state={friend.state}
@@ -141,7 +143,7 @@ export const Home = (): ReactElement => {
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"
                 fontSize={150}
-                color="#795548"
+                color={palette.secondary.main}
                 sx={{
                     marginBottom: "100px",
                     paddingTop: "200px",
@@ -179,7 +181,7 @@ export const Home = (): ReactElement => {
                         justifyContent: "space-between",
                         width: "60%",
                         margin: "50px",
-                        gap: '15px'
+                        gap: "15px",
                     }}
                 >
                     {friendPots}

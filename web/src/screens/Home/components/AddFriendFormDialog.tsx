@@ -79,7 +79,6 @@ export const AddFriendFormDialog = (
                     required={true}
                     onChange={handleNameChange}
                     onKeyDown={handleKeyPress}
-                    sx={{ color: "green" }}
                 />
             </DialogContent>
             <DialogContent>
@@ -94,59 +93,20 @@ export const AddFriendFormDialog = (
                             value={careLevel}
                             onChange={handleCareLevel}
                             row
-                            sx={{
-                                color: "green",
-                                "&.Mui-focused": {
-                                    color: "green",
-                                },
-                            }}
                         >
                             <FormControlLabel
                                 value="low"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "green",
-                                            "&.Mui-checked": {
-                                                color: "green",
-                                            },
-                                        }}
-                                    />
-                                }
+                                control={<Radio />}
                                 label="Low"
-                                sx={{
-                                    color: "green",
-                                    "&.Mui-checked": {
-                                        color: "green",
-                                    },
-                                }}
                             />
                             <FormControlLabel
                                 value="medium"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "green",
-                                            "&.Mui-checked": {
-                                                color: "green",
-                                            },
-                                        }}
-                                    />
-                                }
+                                control={<Radio />}
                                 label="Medium"
                             />
                             <FormControlLabel
                                 value="high"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "green",
-                                            "&.Mui-checked": {
-                                                color: "green",
-                                            },
-                                        }}
-                                    />
-                                }
+                                control={<Radio />}
                                 label="high"
                             />
                         </RadioGroup>
@@ -156,14 +116,12 @@ export const AddFriendFormDialog = (
             <DialogActions>
                 <Button
                     id="cancel-button"
-                    sx={{ color: "green" }}
                     onClick={props.close}
                 >
                     Cancel
                 </Button>
                 <Button
                     id="add-button"
-                    sx={{ color: "green" }}
                     onClick={handleAddFriend}
                 >
                     Add

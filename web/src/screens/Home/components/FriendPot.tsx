@@ -1,5 +1,5 @@
 import { Close } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
@@ -12,6 +12,8 @@ export const FriendPot = ({
     careLevel,
     getFriends,
 }: FriendPotProps): JSX.Element => {
+    const { palette } = useTheme();
+    
     const friend = {
         id,
         userId,
@@ -52,7 +54,7 @@ export const FriendPot = ({
         <Box
             id={id}
             sx={{
-                border: `solid 1px #804545`,
+                border: `solid 1px ${palette.secondary.main}`,
                 borderRadius: "50px",
                 padding: "10px",
                 textAlign: "center",
@@ -67,14 +69,14 @@ export const FriendPot = ({
             >
                 <Close
                     sx={{
-                        color: "#804545",
+                        color: palette.secondary.main,
                     }}
                 ></Close>
             </Button>
 
             <Typography
                 variant="h5"
-                sx={{ color: "green" }}
+                sx={{ color: palette.secondary.main }}
                 component="div"
                 gutterBottom
                 fontFamily="Sue Ellen Francisco"

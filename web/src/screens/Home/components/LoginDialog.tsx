@@ -40,7 +40,7 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
             fullWidth={true}
             id="login-dialog"
         >
-            <DialogTitle sx={{ color: "green" }}>
+            <DialogTitle>
                 Welcome to Friendpots!
             </DialogTitle>
 
@@ -65,7 +65,6 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
             <DialogActions>
                 <Button
                     id="login-button"
-                    sx={{ color: "green" }}
                     onClick={() => saveUserIdInLocal(userId)}
                 >
                     Enter

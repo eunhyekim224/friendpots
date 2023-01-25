@@ -1,8 +1,8 @@
 import { Button, ButtonProps, styled } from "@mui/material";
 
 export const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: "#9e9d24",
-    backgroundColor: "#795548",
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     "&:hover": {
         backgroundColor: "#4b2c20",
     },
@@ -12,8 +12,8 @@ export const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: "#9e9d24",
-    backgroundColor: "#795548",
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     "&:hover": {
         backgroundColor: "#4b2c20",
     },
