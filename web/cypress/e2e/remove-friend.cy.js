@@ -19,16 +19,13 @@ describe("FriendPot", () => {
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
-        const hardinessLevelElement = `span[data-index=${newFriend.hardiness}]`;
-        cy.get(hardinessLevelElement).click();
-
+        cy.get("#care-level-button-low").click();
         cy.get("#add-button").click();
 
-        cy.get("div")
-            .contains(newFriend.name)
+        cy.get("div").contains(newFriend.name);
 
         cy.get("#delete-button").click();
 
-        cy.get("div").contains(newFriend.name).should('not.exist');
+        cy.get("div").contains(newFriend.name).should("not.exist");
     });
 });

@@ -8,7 +8,7 @@ describe("FriendPot", () => {
         const testUserId = `${uuidv4()}@friendpots.com`;
         const newFriend = {
             name: "Jamster",
-            hardiness: 0,
+            careLevel: "low",
         };
 
         // When the user logs in, visits the site and creates the friendpot
@@ -22,9 +22,7 @@ describe("FriendPot", () => {
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
-        const hardinessLevelElement = `span[data-index=${newFriend.hardiness}]`;
-        cy.get(hardinessLevelElement).first().click({ force: true });
-
+        cy.get("#care-level-button-low").click();
         cy.get("#add-button").click();
 
         cy.contains(newFriend.name);
@@ -34,7 +32,7 @@ describe("FriendPot", () => {
         const newFriendPot = cy.get("div").contains(newFriend.name);
         newFriendPot.should("contain", "🥀");
 
-        // Close success snackbar  
+        // Close success snackbar
         cy.get(".css-1e0d89p-MuiButtonBase-root-MuiIconButton-root").click();
 
         // When the user clicks on the button to water the friendpot
