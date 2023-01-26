@@ -13,13 +13,14 @@ describe("Home", () => {
         cy.get("#login-id").type(testUserId);
         cy.get("#login-button").click();
 
-        cy.get("#add-friend-button").click();
+        cy.get("#add-friend-button").click({force: true});
 
         cy.get("#name")
             .type(newFriend.name)
             .should("have.value", newFriend.name);
 
         cy.get("#care-level-button-low").click();
+        cy.get("#add-button").click();
 
         cy.get("#status-snackbar").contains("Success");
 

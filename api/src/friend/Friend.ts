@@ -30,13 +30,13 @@ export class Friend {
     waterFrequencyInDays(): number {
         switch(this.careLevel) {
             case 'low': 
-                return 7;
+                return 28;
             case 'medium':
                 return 14;
             case 'high': 
-                return 21;
+                return 7;
             default:
-                return 21;
+                return 28;
         }
     }
 

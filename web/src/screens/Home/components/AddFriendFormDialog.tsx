@@ -98,32 +98,29 @@ export const AddFriendFormDialog = (
                                 value="low"
                                 control={<Radio />}
                                 label="Low"
+                                id="care-level-button-low"
                             />
                             <FormControlLabel
                                 value="medium"
                                 control={<Radio />}
                                 label="Medium"
+                                id="care-level-button-medium"
                             />
                             <FormControlLabel
                                 value="high"
                                 control={<Radio />}
-                                label="high"
+                                label="High"
+                                id="care-level-button-high"
                             />
                         </RadioGroup>
                     </FormControl>
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button
-                    id="cancel-button"
-                    onClick={props.close}
-                >
+                <Button id="cancel-button" onClick={props.close}>
                     Cancel
                 </Button>
-                <Button
-                    id="add-button"
-                    onClick={handleAddFriend}
-                >
+                <Button id="add-button" onClick={handleAddFriend}>
                     Add
                 </Button>
             </DialogActions>
