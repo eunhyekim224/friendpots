@@ -4,36 +4,42 @@ chai.use(chaiColors);
 
 describe("FriendPot", () => {
     it("can be watered back to health", () => {
+        
         // Given a user and a friendpot that is in UNHEALTHY state
         const testUserId = `${uuidv4()}@friendpots.com`;
-        const newFriend = {
-            name: "Jamster",
+        const unhealthyFriend = {
+            id: "test-new-friend",
+            userId: testUserId,
+            name: "Tiger",
             careLevel: "low",
+            state: "Unhealthy",
         };
 
-        // When the user logs in, visits the site and creates the friendpot
+        cy.intercept(
+            {
+                method: "GET",
+                url: `friends?userId=${testUserId}`,
+            },
+            [unhealthyFriend]
+        ).as("getFriends");
+
+        cy.intercept(
+            {
+                method: "POST",
+                url: `friends/${unhealthyFriend.id}/water`,
+            },
+            { ...unhealthyFriend, state: "Healthy" }
+        ).as("waterFriend");
+
+        // When the user visits the site and logs in
         cy.visit("/");
 
         cy.get("#login-id").type(testUserId);
         cy.get("#login-button").click();
 
-        cy.get("#add-friend-button").click();
-        cy.get("#name")
-            .type(newFriend.name)
-            .should("have.value", newFriend.name);
-
-        cy.get("#care-level-button-low").click();
-        cy.get("#add-button").click();
-
-        cy.contains(newFriend.name);
-        cy.get("#status-snackbar").contains("Success");
-
         // Then the friend pot should be in an unhealthy state
-        const newFriendPot = cy.get("div").contains(newFriend.name);
-        newFriendPot.should("contain", "🥀");
-
-        // Close success snackbar
-        cy.get(".css-1e0d89p-MuiButtonBase-root-MuiIconButton-root").click();
+        const friendPot = cy.get("div").contains(unhealthyFriend.name);
+        friendPot.should("contain", "🥀");
 
         // When the user clicks on the button to water the friendpot
         cy.get("#water-button").first().click();
@@ -41,7 +47,7 @@ describe("FriendPot", () => {
         cy.wait(500);
 
         // Then the friend pot should be re-set to healthy
-        const wateredFriendPot = cy.get("div").contains(newFriend.name);
+        const wateredFriendPot = cy.get("div").contains(unhealthyFriend.name);
         wateredFriendPot.should("contain", "🪴");
     });
 });

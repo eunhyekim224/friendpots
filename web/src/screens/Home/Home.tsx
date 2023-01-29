@@ -51,8 +51,6 @@ export const Home = (): ReactElement => {
 
     const getFriends = useCallback(
         async (userId: string) => {
-            console.log("getting new friends ", userId);
-
             try {
                 const { data: friends } = await axios.get(
                     `friends?userId=${userId}`
@@ -68,7 +66,6 @@ export const Home = (): ReactElement => {
 
     const userIdFromLocal = async () => {
         const userId = JSON.parse(localStorage.getItem("userId") as string);
-        console.log("userId from storage", userId);
         if (userId) {
             setUserId(userId);
             await getFriends(userId);

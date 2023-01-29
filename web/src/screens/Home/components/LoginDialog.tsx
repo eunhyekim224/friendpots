@@ -20,10 +20,6 @@ export const LoginDialog = (props: LoginDialogProps): JSX.Element => {
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
             saveUserIdInLocal(userId);
-            const userId2 = JSON.parse(
-                localStorage.getItem("userId") as string
-            );
-            console.log(userId2);
         }
     };
 
