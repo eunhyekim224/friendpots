@@ -54,7 +54,6 @@ export const FriendPot = ({
         <Box
             id={id}
             sx={{
-                border: `solid 1px ${palette.secondary.main}`,
                 borderRadius: "50px",
                 padding: "10px",
                 textAlign: "center",

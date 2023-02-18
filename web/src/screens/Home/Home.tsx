@@ -1,8 +1,11 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Box, Typography, useTheme } from "@mui/material";
-import { AddFriendButton, LogoutButton } from "./Home.styled";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
+import {
+    AddFriendButton,
+    LogoutButton,
+} from "./Home.styled";
 import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
@@ -130,9 +133,29 @@ export const Home = (): ReactElement => {
                 />
             )}
 
-            <LogoutButton id={"logout-button"} onClick={logout}>
-                Log out
-            </LogoutButton>
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                position={"fixed"}
+            >
+                <Grid item>
+                    <LogoutButton id={"logout-button"} onClick={logout}>
+                        Log out
+                    </LogoutButton>
+                </Grid>
+
+                <Grid item>
+                    <AddFriendButton
+                        variant="contained"
+                        onClick={openModal}
+                        disableFocusRipple
+                        id="add-friend-button"
+                    >
+                        Add a new friendpot
+                    </AddFriendButton>
+                </Grid>
+            </Grid>
 
             <Typography
                 variant="h1"
@@ -142,13 +165,13 @@ export const Home = (): ReactElement => {
                 fontSize={150}
                 color={palette.secondary.main}
                 sx={{
-                    marginBottom: "100px",
                     paddingTop: "200px",
                     textAlign: "center",
                 }}
             >
                 FriendPots
             </Typography>
+
             <Box
                 sx={{
                     display: "flex",
@@ -157,6 +180,12 @@ export const Home = (): ReactElement => {
                     alignItems: "center",
                 }}
             >
+                <AddFriendFormDialog
+                    isOpen={modalIsOpen}
+                    close={closeModal}
+                    addFriend={addFriend}
+                />
+
                 <AddFriendButton
                     variant="contained"
                     onClick={openModal}
@@ -165,11 +194,7 @@ export const Home = (): ReactElement => {
                 >
                     Add a new friendpot
                 </AddFriendButton>
-                <AddFriendFormDialog
-                    isOpen={modalIsOpen}
-                    close={closeModal}
-                    addFriend={addFriend}
-                />
+
                 <Box
                     sx={{
                         display: "flex",

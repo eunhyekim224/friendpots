@@ -28,12 +28,12 @@ export class Friend {
     }
 
     waterFrequencyInDays(): number {
-        switch(this.careLevel) {
-            case 'low': 
+        switch (this.careLevel) {
+            case "low":
                 return 28;
-            case 'medium':
+            case "medium":
                 return 14;
-            case 'high': 
+            case "high":
                 return 7;
             default:
                 return 28;
@@ -44,10 +44,10 @@ export class Friend {
         const currentDate = new Date().valueOf();
         const dateOfLastFullHealth = Date.parse(this.dateOfFullHealth);
 
-        const numberOfDaysPassed =
+        const numberOfDaysSinceLastWatered =
             (currentDate - dateOfLastFullHealth) / (1000 * 60 * 60 * 24);
 
-        if (numberOfDaysPassed >= this.waterFrequencyInDays()) {
+        if (numberOfDaysSinceLastWatered >= this.waterFrequencyInDays()) {
             const friends = new Friends();
             await friends.update({ ...this, state: FriendState.UNHEALTHY });
             return FriendState.UNHEALTHY;

@@ -1,4 +1,4 @@
-import { Button, ButtonProps, styled } from "@mui/material";
+import { Button, ButtonProps, Fab, FabProps, styled } from "@mui/material";
 
 export const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.primary.main,
@@ -7,8 +7,9 @@ export const AddFriendButton = styled(Button)<ButtonProps>(({ theme }) => ({
         backgroundColor: "#4b2c20",
     },
     fontFamily: "Sue Ellen Francisco",
-    fontSize: 30,
-    textTransform: "lowercase",
+    fontSize: 25,
+    textAlign: "center",
+    margin: "10px",
 }));
 
 export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -18,6 +19,6 @@ export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
         backgroundColor: "#4b2c20",
     },
     fontFamily: "Sue Ellen Francisco",
-    fontSize: 30,
-    textTransform: "lowercase",
+    fontSize: 25,
+    margin: "10px",
 }));
