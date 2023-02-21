@@ -1,11 +1,8 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Box, Grid, Typography, useTheme } from "@mui/material";
-import {
-    AddFriendButton,
-    LogoutButton,
-} from "./Home.styled";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { MainButton } from "./Home.styled";
 import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
@@ -13,7 +10,7 @@ import { LoginDialog } from "./components/LoginDialog";
 import { Friend } from "./Home.types";
 
 export const Home = (): ReactElement => {
-    const { palette } = useTheme();
+    const { palette, breakpoints } = useTheme();
 
     const [userId, setUserId] = useState("");
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
@@ -119,6 +116,8 @@ export const Home = (): ReactElement => {
         );
     });
 
+    const smallScreenWidth = useMediaQuery(breakpoints.down("sm"));
+
     return (
         <Box
             sx={{
@@ -140,21 +139,22 @@ export const Home = (): ReactElement => {
                 position={"fixed"}
             >
                 <Grid item>
-                    <LogoutButton id={"logout-button"} onClick={logout}>
+                    <MainButton id={"logout-button"} onClick={logout}>
                         Log out
-                    </LogoutButton>
+                    </MainButton>
                 </Grid>
 
-                <Grid item>
-                    <AddFriendButton
-                        variant="contained"
-                        onClick={openModal}
-                        disableFocusRipple
-                        id="add-friend-button"
-                    >
-                        Add a new friendpot
-                    </AddFriendButton>
-                </Grid>
+                {smallScreenWidth && (
+                    <Grid item>
+                        <MainButton
+                            onClick={openModal}
+                            disableFocusRipple
+                            id="add-friend-button"
+                        >
+                            Add a new friendpot
+                        </MainButton>
+                    </Grid>
+                )}
             </Grid>
 
             <Typography
@@ -186,14 +186,16 @@ export const Home = (): ReactElement => {
                     addFriend={addFriend}
                 />
 
-                <AddFriendButton
-                    variant="contained"
-                    onClick={openModal}
-                    disableFocusRipple
-                    id="add-friend-button"
-                >
-                    Add a new friendpot
-                </AddFriendButton>
+                {!smallScreenWidth && (
+                    <MainButton
+                        variant="contained"
+                        onClick={openModal}
+                        disableFocusRipple
+                        id="add-friend-button"
+                    >
+                        Add a new friendpot
+                    </MainButton>
+                )}
 
                 <Box
                     sx={{
