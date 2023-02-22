@@ -9,7 +9,7 @@ const theme = createTheme({
             main: green[500],
         },
         secondary: {
-            main: brown[500]
+            main: brown[500],
         }
     },
 });

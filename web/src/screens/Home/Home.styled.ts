@@ -9,4 +9,5 @@ export const MainButton = styled(Button)<ButtonProps>(({ theme }) => ({
     fontFamily: "Sue Ellen Francisco",
     fontSize: 25,
     margin: "10px",
+    textTransform: "lowercase"
 }));

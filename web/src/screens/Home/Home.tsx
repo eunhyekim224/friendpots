@@ -19,7 +19,7 @@ export const Home = (): ReactElement => {
     const [snackbarStatus, setSnackbarStatus] = useState<string>();
     const [snackBarIsOpen, setSnackbarIsOpen] = useState(false);
 
-    const successMsg = "You have successfully added your new friend pot! 🎉";
+    const smallScreenWidth = useMediaQuery(breakpoints.down("sm"));
 
     const addFriend = async (name: string, careLevel: string) => {
         const newFriend: Friend = {
@@ -104,89 +104,86 @@ export const Home = (): ReactElement => {
 
     const friendPots = friends?.map((friend) => {
         return (
-            <FriendPot
-                id={friend.id || ""}
-                userId={userId}
-                name={friend.name}
-                state={friend.state}
-                careLevel={friend.careLevel}
-                key={friend.id}
-                getFriends={getFriends}
-            />
+            <Grid item xs={6} md={4} key={friend.id}>
+                <FriendPot
+                    id={friend.id || ""}
+                    userId={userId}
+                    name={friend.name}
+                    state={friend.state}
+                    careLevel={friend.careLevel}
+                    getFriends={getFriends}
+                />
+            </Grid>
         );
     });
 
-    const smallScreenWidth = useMediaQuery(breakpoints.down("sm"));
-
     return (
-        <Box
+        <Grid
+            container
+            direction={"column"}
+            justifyContent={"center"}
             sx={{
                 backgroundColor: "#7cb342",
             }}
         >
-            {isLoginModalOpen && (
-                <LoginDialog
-                    isOpen={isLoginModalOpen}
-                    close={closeLoginModal}
-                    saveUserId={setUserId}
-                />
-            )}
+            <LoginDialog
+                isOpen={isLoginModalOpen}
+                close={closeLoginModal}
+                saveUserId={setUserId}
+            />
+            <AddFriendFormDialog
+                isOpen={modalIsOpen}
+                close={closeModal}
+                addFriend={addFriend}
+            />
 
             <Grid
                 container
-                direction="row"
-                justifyContent="space-between"
-                position={"fixed"}
+                item
             >
-                <Grid item>
-                    <MainButton id={"logout-button"} onClick={logout}>
-                        Log out
-                    </MainButton>
-                </Grid>
-
-                {smallScreenWidth && (
-                    <Grid item>
-                        <MainButton
-                            onClick={openModal}
-                            disableFocusRipple
-                            id="add-friend-button"
-                        >
-                            Add a new friendpot
+                <Grid
+                    container
+                    item
+                    position="fixed"
+                    sx={{
+                        backgroundColor: smallScreenWidth ? palette.secondary.main : '',
+                        zIndex: 2,
+                    }}
+                >
+                    <Grid item xs={5}>
+                        <MainButton id={"logout-button"} onClick={logout}>
+                            Log out
                         </MainButton>
                     </Grid>
-                )}
+
+                    {smallScreenWidth && (
+                        <Grid item xs={7}>
+                            <MainButton
+                                onClick={openModal}
+                                disableFocusRipple
+                                id="add-friend-button"
+                            >
+                                Add a new friendpot
+                            </MainButton>
+                        </Grid>
+                    )}
+                </Grid>
             </Grid>
 
-            <Typography
-                variant="h1"
-                component="div"
-                gutterBottom
-                fontFamily="Sue Ellen Francisco"
-                fontSize={150}
-                color={palette.secondary.main}
-                sx={{
-                    paddingTop: "200px",
-                    textAlign: "center",
-                }}
-            >
-                FriendPots
-            </Typography>
+            <Grid item alignSelf={"center"} sx={{ paddingTop: 15 }}>
+                <Typography
+                    variant="h1"
+                    gutterBottom
+                    fontFamily="Sue Ellen Francisco"
+                    fontSize={smallScreenWidth ? 100 : 150}
+                    color={palette.secondary.main}
+                >
+                    FriendPots
+                </Typography>
+            </Grid>
 
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <AddFriendFormDialog
-                    isOpen={modalIsOpen}
-                    close={closeModal}
-                    addFriend={addFriend}
-                />
-
-                {!smallScreenWidth && (
+            {!smallScreenWidth && (
+                <Grid item alignSelf={"center"}>
                     <MainButton
                         variant="contained"
                         onClick={openModal}
@@ -195,28 +192,21 @@ export const Home = (): ReactElement => {
                     >
                         Add a new friendpot
                     </MainButton>
-                )}
+                </Grid>
+            )}
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        width: "60%",
-                        margin: "50px",
-                        gap: "15px",
-                    }}
-                >
-                    {friendPots}
-                </Box>
-                <StatusSnackbar
-                    isOpen={snackBarIsOpen}
-                    handleSnackbarClose={handleSnackbarClose}
-                    status={snackbarStatus}
-                    successMsg={successMsg}
-                />
-            </Box>
-        </Box>
+            <Grid container item flexWrap={"wrap"} spacing={2}>
+                {friendPots}
+            </Grid>
+
+            <StatusSnackbar
+                isOpen={snackBarIsOpen}
+                handleSnackbarClose={handleSnackbarClose}
+                status={snackbarStatus}
+                successMsg={
+                    "You have successfully added your new friend pot! 🎉"
+                }
+            />
+        </Grid>
     );
 };
