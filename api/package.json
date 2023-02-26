@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "npx ts-mocha -p tsconfig.json src/tests/*.spec.ts",
-    "start": "ts-node-dev src/app.ts"
+    "start": "node src/app.js",
+    "dev": "node src/app.ts"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,9 @@
     "dotenv": "^10.0.0",
     "uuid": "^9.0.0",
     "uuidv4": "^6.2.10"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "prettier": {}
 }

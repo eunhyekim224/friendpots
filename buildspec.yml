@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - cd api
+      - npm install -g typescript
+      - npm install
+  build:
+    commands:
+      - tsc
+
+artifacts:
+  files:
+    - api/package.json
+    - api/package-lock.json
+    - 'api/build/**/*'
