@@ -6,6 +6,7 @@ phases:
       nodejs: latest
     commands:
       - cd api
+      - npm install -g typescript@4.9.5
       - npm install
   build:
     commands:
