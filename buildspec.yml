@@ -5,6 +5,7 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      - n 18
       - cd api
       - npm install -g typescript
       - npm install
