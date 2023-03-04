@@ -15,6 +15,6 @@ phases:
 
 artifacts:
   files:
-    - api/package.json
-    - api/package-lock.json
+    - api/build/package.json
+    - api/build/package-lock.json
     - 'api/build/**/*'
