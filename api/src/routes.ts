@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { URL } from "url";
 import { FriendController } from "./friend/FriendController";
-import { NotFoundController } from "./requestHandling/notFoundController";
+import { NotFoundController } from "./requestHandling/NotFoundController";
 import { RootController } from "./requestHandling/RootController";
 
 export function handler(req: IncomingMessage, res: ServerResponse) {
