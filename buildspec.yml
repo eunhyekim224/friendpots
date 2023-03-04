@@ -11,11 +11,11 @@ phases:
       - npm install
   build:
     commands:
-      - cd api
       - tsc
 
 artifacts:
   files:
     - api/package.json
     - api/package-lock.json
+    - api/tsconfig.json
     - 'api/build/**/*'
