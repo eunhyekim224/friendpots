@@ -5,7 +5,6 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - n 18
       - cd api
       - npm install -g typescript
       - npm install
@@ -14,7 +13,6 @@ phases:
       - tsc
 
 artifacts:
-  files:
-    - api/build/package.json
-    - api/build/package-lock.json
-    - 'api/build/**/*'
+  files: 
+    - '**/*'
+  base-directory: 'api/build'
