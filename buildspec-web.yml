@@ -1,7 +1,7 @@
 version: 0.2
 
 phases:
- install:
+  install:
     runtime-versions:
       nodejs: latest
     commands:
@@ -9,7 +9,7 @@ phases:
       - npm install
   build:
     commands:
-      - npm run build # Build the React app
+      - npm run build
   post_build:
     commands:
       - aws cloudfront create-invalidation --distribution-id ENJ1N3LVDLPPB --paths "/*"
