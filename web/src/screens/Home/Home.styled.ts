@@ -11,5 +11,3 @@ export const MainButton = styled(Button)<ButtonProps>(({ theme }) => ({
     margin: "10px",
     textTransform: "lowercase"
 }));
-
-
