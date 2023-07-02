@@ -6,8 +6,8 @@ phases:
       nodejs: latest
     commands:
       - cd api
-      - npm install --production
       - npm install -g typescript
+      - npm install
   build:
     commands:
       - tsc
