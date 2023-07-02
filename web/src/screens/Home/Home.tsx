@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import "./Home.styled";
-import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { MainButton } from "./Home.styled";
 import { FriendPot } from "./components/FriendPot";
 import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
