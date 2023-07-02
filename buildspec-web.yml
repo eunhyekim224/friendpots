@@ -6,10 +6,10 @@ phases:
       nodejs: latest
     commands:
       - cd web
-      - npm install
+      - npm install --production
   build:
     commands:
-      - npm run build
+      - npm run build:prod
   post_build:
     commands:
       - aws cloudfront create-invalidation --distribution-id ENJ1N3LVDLPPB --paths "/*"

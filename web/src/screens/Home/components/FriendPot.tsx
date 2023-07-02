@@ -3,6 +3,7 @@ import { Box, Button, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { Friend, FriendPotProps, FriendPotState } from "../Home.types";
+import { API_ENDPOINT } from '../../../environment';
 
 export const FriendPot = ({
     id,
@@ -26,7 +27,7 @@ export const FriendPot = ({
     const setFriendPotToHealthy = async () => {
         try {
             const { data: wateredFriend } = await axios.post(
-                `friends/${id}/water`
+                `${API_ENDPOINT}/friends/${id}/water`
             );
             setFriendPot(wateredFriend);
         } catch (error) {

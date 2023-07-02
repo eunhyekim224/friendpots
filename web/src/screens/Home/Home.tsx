@@ -8,6 +8,7 @@ import { AddFriendFormDialog } from "./components/AddFriendFormDialog";
 import { StatusSnackbar } from "../../molecules/StatusSnackbar/StatusSnackbar";
 import { LoginDialog } from "./components/LoginDialog";
 import { Friend } from "./Home.types";
+import { API_ENDPOINT } from '../../environment';
 
 export const Home = (): ReactElement => {
     const { palette, breakpoints } = useTheme();
@@ -30,7 +31,7 @@ export const Home = (): ReactElement => {
 
         try {
             const { data: addedFriend } = await axios.post(
-                "/friends",
+                `${API_ENDPOINT}/friends`,
                 newFriend
             );
 
@@ -53,7 +54,7 @@ export const Home = (): ReactElement => {
         async (userId: string) => {
             try {
                 const { data: friends } = await axios.get(
-                    `friends?userId=${userId}`
+                    `${API_ENDPOINT}/friends?userId=${userId}`
                 );
                 setFriends(friends);
             } catch (err) {

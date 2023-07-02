@@ -9,7 +9,6 @@
         "@fontsource/roboto": "^4.5.7",
         "@mui/icons-material": "^5.8.2",
         "@mui/material": "^5.8.2",
-        "@mui/styles": "^5.8.0",
         "@mui/system": "^5.8.2",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.2.0",
@@ -30,8 +29,10 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "start:dev": "env-cmd -f .env.development react-scripts start",
+        "start:prod": "env-cmd -f .env.production react-scripts start",
+        "build:dev": "env-cmd -f .env.development react-scripts build",
+        "build:prod": "env-cmd -f .env.production react-scripts build",
         "test": "react-scripts test",
         "cypress:open": "cypress open",
         "eject": "react-scripts eject"
@@ -59,6 +60,7 @@
         "@typescript-eslint/eslint-plugin": "^5.26.0",
         "@typescript-eslint/parser": "^5.26.0",
         "cypress": "^10.2.0",
+        "env-cmd": "^10.1.0",
         "eslint": "^8.16.0",
         "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-react": "^7.30.0",

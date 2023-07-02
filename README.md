@@ -1,6 +1,6 @@
 # FriendPots
 
-An app for helping you to connect with your loved ones by reminding you to keep in touch. 
+An app to help you to connect with your loved ones by reminding you to keep in touch. 
 
 ## API
 

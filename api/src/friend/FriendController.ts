@@ -3,7 +3,6 @@ import { Friend, FriendState } from "./Friend";
 import { v4 } from "uuid";
 import { requestBody } from "../requestHandling/requestHandlers";
 import { Friends } from "./Friends";
-import { Users } from "../user/Users";
 
 export class FriendController {
     async handleRequest(req: IncomingMessage, res: ServerResponse) {
