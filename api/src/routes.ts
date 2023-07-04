@@ -7,9 +7,9 @@ import { RootController } from "./requestHandling/RootController";
 export function handler(req: IncomingMessage, res: ServerResponse) {
 
     const headers: IncomingHttpHeaders = {
-        "Access-Control-Allow-Origin": "http://friendpots.com",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "*",
-        "Access-Control-Max-Age": "2592000", // 30 days
+        // "Access-Control-Max-Age": "2592000", // 30 days
     };
 
     const { pathname: resource } = new URL(
