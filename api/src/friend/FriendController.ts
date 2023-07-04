@@ -1,11 +1,15 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "http";
 import { Friend, FriendState } from "./Friend";
 import { v4 } from "uuid";
 import { requestBody } from "../requestHandling/requestHandlers";
 import { Friends } from "./Friends";
 
 export class FriendController {
-    async handleRequest(req: IncomingMessage, res: ServerResponse) {
+    async handleRequest(
+        req: IncomingMessage,
+        res: ServerResponse,
+        headers: IncomingHttpHeaders
+    ) {
         const parsedUrl = new URL(
             req.url as string,
             `http://${req.headers.host}`
@@ -25,6 +29,7 @@ export class FriendController {
 
                             await friend.water();
 
+                            res.writeHead(200, headers);
                             res.end(JSON.stringify(friend));
                         }
                         break;
@@ -34,12 +39,12 @@ export class FriendController {
 
                             await friend.archive();
 
-                            res.writeHead(200);
+                            res.writeHead(200, headers);
                             res.end();
                         }
                         break;
                     default:
-                        res.writeHead(404);
+                        res.writeHead(404, headers);
                         res.end();
                 }
             } else {
@@ -58,7 +63,7 @@ export class FriendController {
                         friendDTO.name,
                         friendDTO.careLevel,
                         currentDate,
-                        currentState,
+                        currentState
                     );
 
                     const friends = new Friends();
@@ -66,6 +71,7 @@ export class FriendController {
                     const savedFriend = await friends.save(friend);
 
                     res.writeHead(201, {
+                        ...headers,
                         Location: `/friends/${friendId}`,
                     });
                     res.end(JSON.stringify(savedFriend));
@@ -92,10 +98,10 @@ export class FriendController {
             }
 
             if (friendData) {
-                res.writeHead(200);
+                res.writeHead(200, headers);
                 res.end(JSON.stringify(friendData));
             } else {
-                res.writeHead(404);
+                res.writeHead(404, headers);
                 res.end();
             }
             res.end();
