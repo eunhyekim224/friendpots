@@ -104,7 +104,6 @@ export class FriendController {
                 res.writeHead(404, headers);
                 res.end();
             }
-            res.end();
         }
     }
 }
