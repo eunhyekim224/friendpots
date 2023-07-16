@@ -10,100 +10,104 @@ export class FriendController {
         res: ServerResponse,
         headers: IncomingHttpHeaders
     ) {
-        const parsedUrl = new URL(
-            req.url as string,
-            `http://${req.headers.host}`
-        );
-
-        if (req.method === "POST") {
-            const action = parsedUrl.pathname.split("/")[3];
-
-            if (action) {
-                const friendId = parsedUrl.pathname.split("/")[2];
-                const friends = new Friends();
-
-                switch (action) {
-                    case "water":
-                        if (friendId) {
-                            const friend = await friends.getBy(friendId);
-
-                            await friend.water();
-
-                            res.writeHead(200, headers);
-                            res.end(JSON.stringify(friend));
-                        }
-                        break;
-                    case "archive":
-                        if (friendId) {
-                            const friend = await friends.getBy(friendId);
-
-                            await friend.archive();
-
-                            res.writeHead(200, headers);
-                            res.end();
-                        }
-                        break;
-                    default:
-                        res.writeHead(404, headers);
-                        res.end();
-                }
-            } else {
-                const requestData = await requestBody(req);
-
-                req.on("end", async () => {
-                    const friendDTO = JSON.parse(requestData) as FriendDTO;
-
-                    const friendId = v4();
-                    const currentDate = new Date().toISOString();
-                    const currentState = FriendState.HEALTHY;
-
-                    const friend = new Friend(
-                        friendId,
-                        friendDTO.userId,
-                        friendDTO.name,
-                        friendDTO.careLevel,
-                        currentDate,
-                        currentState
-                    );
-
-                    const friends = new Friends();
-
-                    const savedFriend = await friends.save(friend);
-
-                    res.writeHead(201, {
-                        ...headers,
-                        Location: `/friends/${friendId}`,
-                    });
-                    res.end(JSON.stringify(savedFriend));
-                });
-            }
-        } else if (req.method === "GET") {
+        try {
             const parsedUrl = new URL(
                 req.url as string,
                 `http://${req.headers.host}`
             );
 
-            const userId = parsedUrl.searchParams.get("userId");
-            const friendId = parsedUrl.pathname.split("/")[2];
+            if (req.method === "POST") {
+                const action = parsedUrl.pathname.split("/")[3];
 
-            let friendData;
-            const friends = new Friends();
+                if (action) {
+                    const friendId = parsedUrl.pathname.split("/")[2];
+                    const friends = new Friends();
 
-            if (userId) {
-                friendData = await friends.getAllBy(userId);
+                    switch (action) {
+                        case "water":
+                            if (friendId) {
+                                const friend = await friends.getBy(friendId);
+
+                                await friend.water();
+
+                                res.writeHead(200, headers);
+                                res.end(JSON.stringify(friend));
+                            }
+                            break;
+                        case "archive":
+                            if (friendId) {
+                                const friend = await friends.getBy(friendId);
+
+                                await friend.archive();
+
+                                res.writeHead(200, headers);
+                                res.end();
+                            }
+                            break;
+                        default:
+                            res.writeHead(404, headers);
+                            res.end();
+                    }
+                } else {
+                    const requestData = await requestBody(req);
+
+                    req.on("end", async () => {
+                        const friendDTO = JSON.parse(requestData) as FriendDTO;
+
+                        const friendId = v4();
+                        const currentDate = new Date().toISOString();
+                        const currentState = FriendState.HEALTHY;
+
+                        const friend = new Friend(
+                            friendId,
+                            friendDTO.userId,
+                            friendDTO.name,
+                            friendDTO.careLevel,
+                            currentDate,
+                            currentState
+                        );
+
+                        const friends = new Friends();
+
+                        const savedFriend = await friends.save(friend);
+
+                        res.writeHead(201, {
+                            ...headers,
+                            Location: `/friends/${friendId}`,
+                        });
+                        res.end(JSON.stringify(savedFriend));
+                    });
+                }
+            } else if (req.method === "GET") {
+                const parsedUrl = new URL(
+                    req.url as string,
+                    `http://${req.headers.host}`
+                );
+
+                const userId = parsedUrl.searchParams.get("userId");
+                const friendId = parsedUrl.pathname.split("/")[2];
+
+                let friendData;
+                const friends = new Friends();
+
+                if (userId) {
+                    friendData = await friends.getAllBy(userId);
+                }
+
+                if (friendId) {
+                    friendData = await friends.getBy(friendId);
+                }
+
+                if (friendData) {
+                    res.writeHead(200, headers);
+                    res.end(JSON.stringify(friendData));
+                } else {
+                    res.writeHead(404, headers);
+                    res.end();
+                }
             }
-
-            if (friendId) {
-                friendData = await friends.getBy(friendId);
-            }
-
-            if (friendData) {
-                res.writeHead(200, headers);
-                res.end(JSON.stringify(friendData));
-            } else {
-                res.writeHead(404, headers);
-                res.end();
-            }
+        } catch (err: any) {
+            console.log("FriendController error", err);
         }
     }
 }
